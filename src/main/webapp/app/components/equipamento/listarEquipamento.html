@@ -1,0 +1,55 @@
+<div class="row">
+   <div class="col-lg-12">
+      <ol class="breadcrumb">
+         <li><a href="#redirectToHome">Inicial</a>
+         </li>
+         <li class="active">Equipamento</li>
+      </ol>
+   </div>
+</div>
+<div class="row">
+   <div class="col-lg-12">
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <p class="fa consulta"></p>
+            Equipamento
+         </div>
+         <div class="panel-body">
+            <form role="form">
+               <div class="row"> 
+                  <div class="form-group col-md-12">
+                     <label>Nome</label>  
+                     <input class="form-control" ng-model="equipamento.nome" ng-init="equipamento.nome=''">
+                  </div>
+               </div>
+               <div class="botoes-group">
+                  <button id="buttonConsultar" class="btn btn-default" ng-click="consultar()">Consultar</button>
+                  <button id="buttonIncluir" class="btn btn-default" ng-click="incluir()">Incluir</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="row" ng-show="equipamentos">
+   <div class="col-lg-12">
+      <div class="panel panel-default">
+         <div class="panel-body">
+            <table datatable="ng" class="table-striped row-border hover">
+               <thead>
+                  <tr>
+                     <th>Nome</th>
+                     <th>Cor</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="equipamento in equipamentos" ng-cloak ng-click="editar(equipamento)">
+                     <td>{{equipamento.nome}}</td>
+                     <td><div class="caixa-cor" style="background-color: {{equipamento.corReferencia}}"></div></div></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>

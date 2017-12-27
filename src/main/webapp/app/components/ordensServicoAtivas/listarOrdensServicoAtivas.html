@@ -1,0 +1,204 @@
+<div class="row">
+   <div class="col-lg-12">
+      <ol class="breadcrumb">
+         <li><a href="#redirectToHome">Inicial</a></li>
+         <li class="active">Ordens de Serviço Ativas</li>
+      </ol>
+      </h1>
+   </div>
+</div>
+<div class="row">
+   <div class="col-md-12">
+      <div id="ghx-work" class="ghx-work">
+         <div id="ghx-pool-column">
+            <div id="ghx-pool" class="ghx-band-1" style="display: block; ">
+               <div class="ghx-column-header-group ghx-has-stats ghx-fixed">
+                  <ul id="ghx-column-headers" class="ghx-column-headers">
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:1 as filteredAbertas"></div>
+                        <div class="ghx-qty">{{filteredAbertas.length}}</div>
+                        <h2>Aberta</h2>
+                     </li>
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:2 as filteredAnaliseOrcamento"></div>
+                        <div class="ghx-qty">{{filteredAnaliseOrcamento.length}}</div>
+                        <h2>Análise Orcamento</h2>
+                     </li>
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:3 as filteredPendenteAprovacaoOrcamentoCliente"></div>
+                        <div class="ghx-qty">{{filteredPendenteAprovacaoOrcamentoCliente.length}}</div>
+                        <h2>Pendente de Aprovação do Orçamento pelo Cliente</h2>
+                     </li>
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:4 as filteredOrcamentoReprovadoCliente"></div>
+                        <div class="ghx-qty">{{filteredOrcamentoReprovadoCliente.length}}</div>
+                        <h2>Orçamento Reprovado pelo Cliente</h2>
+                     </li>
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:5 as filteredOrcamentoAprovadCliente"></div>
+                        <div class="ghx-qty">{{filteredOrcamentoAprovadCliente.length}}</div>
+                        <h2>Orçamento Aprovado pelo Cliente</h2>
+                     </li>
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:6 as filteredExecutandoServico"></div>
+                        <div class="ghx-qty">{{filteredExecutandoServico.length}}</div>
+                        <h2>Executando Serviço</h2>
+                     </li>
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:7 as filteredServicoFinalizado"></div>
+                        <div class="ghx-qty">{{filteredServicoFinalizado.length}}</div>
+                        <h2>Serviço Finalizado</h2>
+                     </li>
+                     <li class="ghx-column">
+                        <div ng-repeat="ordemServico in ordensServicoAtivas | filtrarOrdemServico:8 as filteredAguardandoRetirada"></div>
+                        <div class="ghx-qty">{{filteredAguardandoRetirada.length}}</div>
+                        <h2>Aguardando Retirada</h2>
+                     </li>
+                  </ul>
+               </div>
+               <div class="ghx-swimlane" style="width: 100%">
+                  <ul class="ghx-columns">
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredAbertas" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}  
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Aberto Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa ? 'green' : ordemServico.numeroDiasEtapa == 1 ? 'yellow' : 'red'}}"></div>
+                        </div>                        
+                     </li>
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredAnaliseOrcamento" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}  
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Movido Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa || ordemServico.numeroDiasEtapa <= 3 ? 'green' : ordemServico.numeroDiasEtapa <= 5 ? 'yellow' : 'red'}}"></div>
+                        </div>                           
+                     </li>
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredPendenteAprovacaoOrcamentoCliente" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Movido Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa ? 'green' : ordemServico.numeroDiasEtapa == 1 ? 'yellow' : 'red'}}"></div>
+                        </div>                        
+                     </li>
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredOrcamentoReprovadoCliente" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}  
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Movido Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa ? 'green' : ordemServico.numeroDiasEtapa == 1 ? 'yellow' : 'red'}}"></div>
+                        </div>                       
+                     </li>
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredOrcamentoAprovadCliente" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}  
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Movido Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa ? 'green' : ordemServico.numeroDiasEtapa == 1 ? 'yellow' : 'red'}}"></div>
+                        </div>                         
+                     </li>
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredExecutandoServico" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}  
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Movido Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa || ordemServico.numeroDiasEtapa <= 5 ? 'green' : ordemServico.numeroDiasEtapa <= 10 ? 'yellow' : 'red'}}"></div>
+                        </div>                        
+                     </li>
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredServicoFinalizado" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}  
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Movido Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa ? 'green' : ordemServico.numeroDiasEtapa == 1 ? 'yellow' : 'red'}}"></div>
+                        </div>                        
+                     </li>
+                     <li class="ghx-column ui-sortable">
+                        <div class="ghx-issue ghx-has-avatar link" ng-repeat="ordemServico in filteredAguardandoRetirada" ng-click="abrirOrdemServico(ordemServico.idOrdemServico)" style="background-color: {{ordemServico.corReferenciaEquipamento}}">
+                           <span class="label label-primary lb-md">{{ordemServico.numeroOrdemServico}}</span>
+                           <span class="label lb-md label-warning" ng-if="ordemServico.referenciaRetorno" title="Retorno">R</span>
+                           <span class="label lb-md" title="{{ordemServico.aprovado == 'S' ? 'Orçamento Aprovado' : 'Orçamento Reprovado'}}" ng-class="ordemServico.aprovado == 'S' ? 'label-success' : 'label-danger'">{{ordemServico.aprovado}}</span>
+                           <small class=" text-muted">
+                           <div class="ghx-summary" title="{{ordemServico.defeito}}"><span class="ghx-inner">{{ordemServico.nomeCliente}} | {{ordemServico.nomeEquipamento}} | {{ordemServico.telefoneCliente}}</span></div>
+                           </small>
+                           <small class=" text-muted">
+                           <i class="fa fa-clock-o fa-fw"></i> {{ordemServico.dataInclusaoEtapa  | date:'dd/MM/yyyy HH:mm' }}
+                           </small>
+                           <br>
+                           <small class=" text-muted">
+                           <i class="fa fa-user fa-fw"></i> {{ordemServico.loginUsuarioEtapa}}  
+                           </small>
+                           <div class="ghx-grabber" title="{{ordemServico.numeroDiasEtapa ? ordemServico.numeroDiasEtapa + 'dia(s) na etapa' : 'Movido Hoje'}}" style="background-color:{{!ordemServico.numeroDiasEtapa || ordemServico.numeroDiasEtapa <= 30 ? 'green' : ordemServico.numeroDiasEtapa <= 60 ? 'yellow' : 'red'}}"></div>
+                        </div>                    
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

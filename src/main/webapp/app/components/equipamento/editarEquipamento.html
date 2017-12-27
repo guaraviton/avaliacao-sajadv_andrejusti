@@ -1,0 +1,42 @@
+<div class="row" ng-if='!modal'>
+   <div class="col-lg-12">
+      <ol class="breadcrumb">
+         <li><a href="#redirectToHome">Inicial</a></li>
+         <li class="active"><a href="#equipamento">Equipamento</a></li>
+         <li class="active">Edição</li>
+      </ol>      
+   </div>
+</div>
+<div class="row">
+   <div class="col-lg-12">
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <p class="fa edicao"></p>
+            Equipamento
+         </div>
+         <div class="panel-body">
+            <div class="row">
+               <div class="col-lg-12">
+                  <form role="form" name="equipamentoForm" novalidate>
+                     <div class="form-group">
+                        <label>Nome</label>
+                        <input class="form-control" placeholder="Obrigatório" ng-model="equipamento.nome" maxlength="200" required>
+                     </div>
+                     <div class="row">
+                        <div class="form-group col-md-2">
+                        	<label>Cor Referência</label>
+                           <div class="caixa-cor" colorpicker ng-model="equipamento.corReferencia" style="background-color: {{equipamento.corReferencia}}"></div>
+                        </div>                        
+                     </div>
+                     <div class="botoes-group">
+                        <button id="buttonVoltar" class="btn btn-default" ng-click="voltar()" ng-if='!modal'>Voltar</button>
+                        <button id="buttonFechar" class="btn btn-default" ng-click="fechar()" ng-if='modal'>Fechar</button>
+                        <button id="buttonSalvar" class="btn btn-primary" busy="Salvar" busy-disabled="true" ng-click="salvar()" ng-disabled="equipamentoForm.$invalid">Salvar</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

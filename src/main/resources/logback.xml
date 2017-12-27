@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property resource="log.properties" />
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{dd/MM/yyyy HH:mm:ss} [%thread] %-5level %logger{36} - %msg %n</Pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${severity}</level>
+		</filter>
+	</appender>
+
+  	<appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${logpath}</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		    <!-- daily rollover -->
+			<FileNamePattern>${logpath}.%d{yyyy-MM-dd}</FileNamePattern>
+			<!-- keep 5 days' worth of history -->
+			<maxHistory>5</maxHistory>			
+		</rollingPolicy>
+
+		<encoder>
+			<Pattern>${pattern}</Pattern>
+		</encoder> 	    
+  	</appender>
+  	
+	<!-- 
+	<logger name="org.hibernate.type" level="TRACE" />-->
+
+	<root>
+		<level value="${severity}" />
+		<!-- 
+		<appender-ref ref="consoleAppender" />-->
+		<appender-ref ref="dailyRollingFileAppender" />
+	</root>
+</configuration>
