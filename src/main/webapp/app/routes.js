@@ -5,31 +5,26 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     })
 	.when('/', {
 		controller : 'HomeController',
-		templateUrl : 'app/components/home/homeView.html',
-		resolve: {	   	    	
-    		ordensServicoAtivas: ['OrdemServicoResource', function(OrdemServicoResource) {	 		
-    			return OrdemServicoResource.ativas().$promise;
-    		}]
-		}
+		templateUrl : 'app/components/home/homeView.html'
 	})	
-	.when('/cliente', {
-		controller : 'ClienteController',
-		templateUrl : 'app/components/cliente/listarCliente.html',
+	.when('/responsavel', {
+		controller : 'ResponsavelController',
+		templateUrl : 'app/components/responsavel/responsavelListar.html',
       	resolve: {	   	    	
-    		cliente: function() {	 	    		
+      		responsavel: function() {	 	    		
        			return null;
     		}   	
 		}
 	})	
-	.when('/cliente/:id', {
-		controller : 'ClienteController',
-		templateUrl : 'app/components/cliente/editarCliente.html',
+	.when('/responsavel/:id', {
+		controller : 'ResponsavelController',
+		templateUrl : 'app/components/responsavel/responsavelEditar.html',
       	resolve: {	   	    	
-    		cliente: ['ClienteResource', '$route', function(ClienteResource, $route) {	 
+      		responsavel: ['ResponsavelResource', '$route', function(ResponsavelResource, $route) {	 
 	    		if($route.current.params.id == 0){
     				return;
     			}		    
-       			return ClienteResource.get({id: $route.current.params.id}).$promise;
+       			return ResponsavelResource.get({id: $route.current.params.id}).$promise;
     		}]    	
 		}
 	})

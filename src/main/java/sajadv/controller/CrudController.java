@@ -40,11 +40,11 @@ public abstract class CrudController<T extends BaseEntity>{
 		return getService().query();
     }*/
 	
-	/*@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
     public Boolean excluir(@PathVariable Integer id) {
 		getService().excluir(id);
 		return true;
-    }*/
+    }
 	
 }

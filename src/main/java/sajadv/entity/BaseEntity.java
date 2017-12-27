@@ -22,4 +22,6 @@ public class BaseEntity implements Serializable {
 	public Object getRealClass(){
 		return HibernateUtils.getRealObject(this);
 	}
+	
+	
 }

@@ -16,8 +16,6 @@
 	    <link rel="shortcut icon" href="favicon.ico" />
 	    <link rel="stylesheet" href="assets/libs/bootstrap/css/bootstrap.min.css">
 	    <link rel="stylesheet" href="assets/libs/uiselect/css/select.min.css">	    
-	    <link rel="stylesheet" href="assets/css/sbAdmin/css/sb-admin-2.css" >
-	    <link rel="stylesheet" href="assets/css/sbAdmin/css/timeline.css" >
 	    <link rel="stylesheet" href="assets/css/app.css">	    
 	    <link rel="stylesheet" href="assets/libs/datatables/css/angular-datatables.css">
 	    <link rel="stylesheet" href="assets/libs/datatables/css/jquery.dataTables.css">
@@ -26,15 +24,14 @@
 	    <link rel="stylesheet" href="assets/libs/datatables/css/buttons.dataTables.min.css" rel="stylesheet">
 	    <link rel="stylesheet" href="assets/libs/angular-busy/angular-busy.min.css" rel="stylesheet">
 	    <link rel="stylesheet" href="assets/css/components-font-awesome/css/font-awesome.min.css" >	   
-	    <link rel="stylesheet" href="assets/libs/angular-bootstrap-colorpicker/colorpicker.min.css"> 
-	    <title>PCMaker</title>
+	    <title>Gestão de Processos</title>
 	</head>	
 	<body ng-controller="MainController" ng-cloak>  
 		<div id="wrapper">			
 			<toaster-container toaster-options="{'time-out': 5000, 'close-button':true, 'limit': 10, 'position-class':'toast-top-right'}"></toaster-container> 
 			<nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0" ng-if='!modal'>
 	            <div class="navbar-header" style="float: left;">
-	               <a class="navbar-brand" href="#redirectToHome">PC<p><span>MAKER</span></p></a></a>               
+	               <a class="navbar-brand" href="#redirectToHome">Gestão<p><span>Processos</span></p></a></a>               
 	            </div>
 	            <ul class="nav navbar-top-links navbar-right" ng-show="auth" style="float: right;">
 	               <!-- /.dropdown -->
@@ -81,13 +78,6 @@
 	    <script type="text/javascript" src="assets/libs/ng-file-upload/angular-file-upload-shim.min.js"></script>
 	    <script type="text/javascript" src="assets/libs/ng-file-upload/angular-file-upload.min.js"></script>
 	    <script type="text/javascript" src="assets/libs/angular-input-masks/angular-input-masks.br.min.js"></script>
-	    <script type="text/javascript" src="assets/libs/angular-wysiwyg/angular-wysiwyg.min.js"></script>
-	    <script type="text/javascript" src="assets/libs/angular-bootstrap-colorpicker/bootstrap-colorpicker-module.min.js"></script>
-	    <script type="text/javascript" src="assets/libs/raphael/raphael-min.js"></script>
-	    <script type="text/javascript" src="assets/libs/morris/morris.min.js"></script>	    
-	    <script type="text/javascript" src="assets/libs/angular-morris/angular-morris.min.js"></script>	    
-		
-		<script type="text/javascript" src="app/shared/roleUtils/role-utils.js"></script>
 		<script type="text/javascript" src="app/shared/progress/module.js"></script>
 		<script type="text/javascript" src="app/shared/progress/progress.interceptor.js"></script>
 	    <script type="text/javascript" src="app/shared/progress/progress.config.js"></script>
@@ -102,34 +92,10 @@
 	    <!-- Controllers -->
 	    <script type="text/javascript" src="app/components/main/mainController.js"></script>    
 	    <script type="text/javascript" src="app/components/home/homeController.js"></script>    
-	    <script type="text/javascript" src="app/components/login/loginController.js"></script>
-	    <script type="text/javascript" src="app/components/cliente/clienteController.js"></script>
-	    <script type="text/javascript" src="app/components/usuario/usuarioController.js"></script>
-	    <script type="text/javascript" src="app/components/perfil/perfilController.js"></script>
-	    <script type="text/javascript" src="app/components/equipamento/equipamentoController.js"></script>
-	    <script type="text/javascript" src="app/components/avaria/avariaController.js"></script>
-	    <script type="text/javascript" src="app/components/acessorio/acessorioController.js"></script>
-	    <script type="text/javascript" src="app/components/ordemServico/ordemServicoController.js"></script>
-	    <script type="text/javascript" src="app/components/ordensServicoAtivas/ordensServicoAtivasController.js"></script>
-	    <script type="text/javascript" src="app/components/emailMarketing/emailMarketingController.js"></script>
-	    <script type="text/javascript" src="app/components/configuracaoSistema/configuracaoSistemaController.js"></script>
-	    <script type="text/javascript" src="app/components/dashboard/dashboardController.js"></script>
+	    <script type="text/javascript" src="app/components/responsavel/responsavelController.js"></script>
 	
 	    <!-- Resources -->
-    	<script type="text/javascript" src="app/components/auth/authResource.js"></script>
-    	<script type="text/javascript" src="app/components/cliente/clienteResource.js"></script>
-    	<script type="text/javascript" src="app/components/usuario/usuarioResource.js"></script>
-    	<script type="text/javascript" src="app/components/perfil/perfilResource.js"></script>
-    	<script type="text/javascript" src="app/components/equipamento/equipamentoResource.js"></script>
-    	<script type="text/javascript" src="app/components/avaria/avariaResource.js"></script>
-    	<script type="text/javascript" src="app/components/acessorio/acessorioResource.js"></script>
-    	<script type="text/javascript" src="app/components/ordemServico/ordemServicoResource.js"></script>
-    	<script type="text/javascript" src="app/components/emailMarketing/emailMarketingResource.js"></script>
-    	<script type="text/javascript" src="app/components/configuracaoSistema/configuracaoSistemaResource.js"></script>
-    	<script type="text/javascript" src="app/components/dashboard/dashboardResource.js"></script>
+    	<script type="text/javascript" src="app/components/responsavel/responsavelResource.js"></script>
     	
-	    <!-- Services -->     
-	    <script type="text/javascript" src="app/components/auth/authService.js"></script>
-	    
 	</body>
 </html>

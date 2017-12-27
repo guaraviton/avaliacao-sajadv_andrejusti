@@ -1,0 +1,68 @@
+<div class="row">
+   <div class="col-lg-12">
+      <ol class="breadcrumb">
+         <li><a href="#redirectToHome">Gestão de Processos</a>
+         </li>
+         <li class="active">Consultar Responsável</li>
+      </ol>
+   </div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<fieldset class="consulta">
+			<legend>Filtros</legend>
+			<div class="col-lg-12">
+				<form novalidate>
+	             	<div class="row"> 
+		                <div class="form-group col-md-4">
+	                   		<label>Responsável</label>  
+	                   		<input class="form-control" ng-model="responsavel.nome" ng-init="responsavel.nome=''">
+	                	</div>
+	                	<div class="form-group col-md-2">
+	                   		<label>CPF</label>
+	                   		<input class="form-control" mask="000.000.000-00" ng-model="responsavel.cpf" ng-init="responsavel.cpf=''">
+	                	</div>
+	                	<div class="form-group col-md-4">
+	                   		<label>Número Processo Unificado</label>
+	                   		<input class="form-control" mask="0000000-00.0000.0.00.0000" ng-model="responsavel.numeroProcessoUnificado" ng-init="responsavel.numeroProcessoUnificado=''">
+	                	</div>
+	                	<div class="form-group col-md-2">
+	                   		<label>&nbsp;</label>
+	                   		<button id="buttonConsultar" class="btn btn-default btn-app" ng-click="consultar()">Consultar</button>
+	                	</div>
+	             	</div>
+	          	</form>
+			</div>
+		</fieldset>
+	</div>
+</div>
+            
+<div class="row" ng-show="responsaveis">
+   <div class="col-lg-12">
+      <div class="panel panel-default">
+         <div class="panel-body">
+            <table datatable="ng" class="table-striped row-border hover">
+               <thead>
+                  <tr>
+                     <th>Nome</th>
+                     <th>Cpf</th>
+                     <th>Processos que é Responsável</th>
+                     <th class="no-sort">Ações</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="responsavel in responsaveis" ng-click="editar(cliente)">
+                     <td>{{responsavel.nome}}</td>
+                     <td>{{responsavel.cpf}}</td>                     
+                     <td>{{responsavel.cpf}}</td>
+                     <td class="acoes">
+                     	<i class="fa fa-pencil" title="Alterar"></i>
+                     	<i class="fa fa-times" title="Excluir" ng-click="excluir(responsavel)"></i>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>

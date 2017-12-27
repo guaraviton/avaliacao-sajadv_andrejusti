@@ -9,8 +9,6 @@ import org.hibernate.criterion.Restrictions;
 import sajadv.dao.CrudDAO;
 import sajadv.dao.DAO;
 import sajadv.entity.IdEntity;
-import sajadv.entity.StatusRegistroEntity;
-import sajadv.enums.StatusRegistro;
 
 public abstract class CrudDAOImpl<T extends IdEntity> extends DAO implements CrudDAO<T>{
 
@@ -27,21 +25,7 @@ public abstract class CrudDAOImpl<T extends IdEntity> extends DAO implements Cru
 	}
 
 	public void excluir(T entidade){
-		StatusRegistroEntity entidadeExcluida = (StatusRegistroEntity) entidade;
-		entidadeExcluida.setStatusRegistro(StatusRegistro.EXCLUIDO.getCodigo());
-		template.update(entidadeExcluida);
-	}
-	
-	public void inativar(T entidade){
-		StatusRegistroEntity entidadeExcluida = (StatusRegistroEntity) entidade;
-		entidadeExcluida.setStatusRegistro(StatusRegistro.INATIVO.getCodigo());
-		template.update(entidadeExcluida);
-	}
-	
-	public void ativar(T entidade){
-		StatusRegistroEntity entidadeExcluida = (StatusRegistroEntity) entidade;
-		entidadeExcluida.setStatusRegistro(StatusRegistro.ATIVO.getCodigo());
-		template.update(entidadeExcluida);
+		template.delete(entidade);
 	}
 	
 	@SuppressWarnings("unchecked") 
@@ -54,7 +38,7 @@ public abstract class CrudDAOImpl<T extends IdEntity> extends DAO implements Cru
 	}
 	
 	@Override
-	public List<T> query() {
+	public List<T> list() {
         return (List<T>) template.loadAll(entityClass);
 	}
 	

@@ -6,9 +6,9 @@ angular.module('app')
         $provide.factory('interceptor',
 
             // dependencies injection
-            ['$q', '$rootScope', '$window', 'toaster', '$injector', '$location','APP_CONFIG',
+            ['$q', '$rootScope', '$window', 'toaster', '$injector', '$location',
 
-                function($q, $rootScope, $window, toaster, $injector, $location,APP_CONFIG) {
+                function($q, $rootScope, $window, toaster, $injector, $location) {
 
                     function popErrorMessage(rejection) {
                     	if(typeof rejection.data === 'string')
@@ -17,40 +17,27 @@ angular.module('app')
                     	}else{
                     		toaster.pop('error', 'Erro ao realizar a sua requisição', 'Favor contactar o administrador do sistema.');
                     	}
-                        
                     }
-
                     return {                        
                         request: function(config) {     
-                        	config.headers[APP_CONFIG.TOKEN_HEADER_NAME] = $rootScope.token;
                             return config || $q.when(config);
                         },
-
-                        // On request failure
                         requestError: function(rejection) {     
                             return $q.reject(rejection);
                         },
-
-                        // On response success
                         response: function(response) {                                   
                             if (response.data.mensagemRetorno){
                             	toaster.pop(response.data.mensagemRetorno.tipo, response.data.mensagemRetorno.titulo,response.data.mensagemRetorno.mensagem);	
                             }
-                            
                             return response || $q.when(response);
                         },
-
-                        // On response failture
                         responseError: function(rejection) {         
                             switch (rejection.status) {
                                 case 401:
-                                    if (rejection.config.data && rejection.config.data.isLogin) {
+                                	if (rejection.data && rejection.data.mensagem) {
                                     	toaster.pop('error', null, rejection.data.errors[0].message);
-                                    } else {             
-                                    	$rootScope.token = null;
-                            			$rootScope.auth = null;
-                            			$rootScope.menu = null;
-                                    	$location.path('/redirectToLogin');                                                                                        
+                                    } else {
+                                    	popErrorMessage(rejection);
                                     }
                                     break;
                                 case 403:

@@ -12,10 +12,5 @@ public interface CrudDAO<T extends BaseEntity> {
 	
 	void excluir(T entidade);
 	
-	void inativar(T entidade);
-	
-	void ativar(T entidade);
-	
-	List<T> query();
-
+	List<T> list();
 }

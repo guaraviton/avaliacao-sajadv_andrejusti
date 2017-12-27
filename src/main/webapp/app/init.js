@@ -1,4 +1,4 @@
-var app = angular.module('app', ['app.controller', 'app.resources', 'app.services', 'ngRoute', 'ui.select','ngSanitize','ui.bootstrap','datatables','datatables.buttons','toaster','ngAnimate', 'fend.progressbar.loading','ui.mask', 'angular-jquery-mask','angularFileUpload','cgBusy','ngBusy', 'role-utils', 'ui.utils.masks', 'colorpicker.module', 'wysiwyg.module'])
+var app = angular.module('app', ['app.controller', 'app.resources', 'app.services', 'ngRoute', 'ui.select','ngSanitize','ui.bootstrap','datatables','datatables.buttons','toaster','ngAnimate', 'fend.progressbar.loading','ui.mask', 'angular-jquery-mask','angularFileUpload','cgBusy','ngBusy', 'ui.utils.masks'])
 .run(['uibDatepickerPopupConfig', function(datepickerPopupConfig) {
     datepickerPopupConfig.appendToBody = true;
     datepickerPopupConfig.closeText = "Fechar";
@@ -46,24 +46,13 @@ var app = angular.module('app', ['app.controller', 'app.resources', 'app.service
 	    confirmModal.modal('show');    
 	}; 
 })
-.constant('APP_CONFIG', {
-		'TOKEN_TIME_REFRESH': (25 * 60 * 1000),
-		'TOKEN_HEADER_NAME': 'Authorization',
-        'ORDENS_SERVICO_ATIVAS_TIME_REFRESH': (5 * 60 * 1000)
-	}
-)
-.constant('LISTA_ETAPAS_ORDEM_SERVICO',
+.constant('LISTA_SITUACOES',
 	[
-		{id: 1, nome: 'Aberta'},
-		{id: 2, nome: 'Análise Orcamento'},
-		{id: 3, nome: 'Pendente de aprovação do Orçamento pelo Cliente'},
-		{id: 4, nome: 'Orcamento Reprovado Cliente'},
-		{id: 5, nome: 'Orcamento Aprovado Cliente'},
-		{id: 6, nome: 'Executando Serviço'},
-		{id: 7, nome: 'Serviço Finalizado'},
-		{id: 8, nome: 'Aguardando Retirada'},
-		{id: 9, nome: 'Finalizada'},
-		{id: 10, nome: 'Cancelada'}
+		{id: 1, nome: 'Em Andamento'},
+		{id: 2, nome: 'Desmembrado'},
+		{id: 3, nome: 'Em recurso'},
+		{id: 4, nome: 'Finalizado'},
+		{id: 5, nome: 'Arquivado'}
 	]
 );
 

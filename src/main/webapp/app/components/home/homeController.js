@@ -1,6 +1,4 @@
-appController.controller('HomeController', ['$rootScope', '$scope', 'ordensServicoAtivas', '$filter', HomeController]);
+appController.controller('HomeController', ['$scope', HomeController]);
 
-function HomeController ($rootScope, $scope, ordensServicoAtivas, $filter) {
-    $scope.title = "HomeController";    
-    $rootScope.ordensServicoAtivas = ordensServicoAtivas;       
+function HomeController ($scope, $filter) {
 };

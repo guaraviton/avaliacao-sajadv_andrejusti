@@ -26,25 +26,13 @@ public abstract class CrudServiceImpl<T extends BaseEntity> implements CrudServi
 		getDAO().excluir(entity);
 	}
 	
-	@Transactional
-	public void inativar(Integer id) {
-		T entity = getDAO().get(id);
-		getDAO().inativar(entity);
-	}
-	
-	@Transactional
-	public void ativar(Integer id) {
-		T entity = getDAO().get(id);
-		getDAO().ativar(entity);
-	}
-	
 	@Override
 	public T get(Integer id) {
 		return getDAO().get(id);
 	}
 	
 	@Override
-	public List<T> query() {
-		return getDAO().query();
+	public List<T> list() {
+		return getDAO().list();
 	}
 }

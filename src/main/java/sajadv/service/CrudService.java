@@ -14,13 +14,7 @@ public interface CrudService<T extends BaseEntity> {
 	@Transactional
 	void excluir(Integer id);
 	
-	@Transactional
-	void inativar(Integer id);
-	
-	@Transactional
-	void ativar(Integer id);
-	
-	List<T> query();
+	List<T> list();
 	
 	T get(Integer id);
 }
