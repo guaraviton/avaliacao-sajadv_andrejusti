@@ -17,7 +17,6 @@
 		<jackson.version>2.6.0</jackson.version>
 		<logback.version>1.1.2</logback.version>
 		<jcloverslf4j.version>1.7.7</jcloverslf4j.version>
-		<commons.configuration2>2.1</commons.configuration2>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<m2eclipse.wtp.contextRoot>gestaodeprocessos</m2eclipse.wtp.contextRoot>
 	</properties>

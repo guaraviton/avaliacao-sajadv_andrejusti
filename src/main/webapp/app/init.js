@@ -1,4 +1,4 @@
-var app = angular.module('app', ['app.controller', 'app.resources', 'app.services', 'ngRoute', 'ui.select','ngSanitize','ui.bootstrap','datatables','datatables.buttons','toaster','ngAnimate', 'fend.progressbar.loading','ui.mask', 'angular-jquery-mask','angularFileUpload','cgBusy','ngBusy', 'role-utils', 'ui.utils.masks', 'colorpicker.module', 'wysiwyg.module', 'angular.morris'])
+var app = angular.module('app', ['app.controller', 'app.resources', 'app.services', 'ngRoute', 'ui.select','ngSanitize','ui.bootstrap','datatables','datatables.buttons','toaster','ngAnimate', 'fend.progressbar.loading','ui.mask', 'angular-jquery-mask','angularFileUpload','cgBusy','ngBusy', 'role-utils', 'ui.utils.masks', 'colorpicker.module', 'wysiwyg.module'])
 .run(['uibDatepickerPopupConfig', function(datepickerPopupConfig) {
     datepickerPopupConfig.appendToBody = true;
     datepickerPopupConfig.closeText = "Fechar";
