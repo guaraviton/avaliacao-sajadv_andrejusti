@@ -115,7 +115,6 @@ table.dataTable thead .sorting_desc:after {
 .breadcrumb {
 	margin-top: 10px;
 	padding: 8px 0px;
-	margin-bottom: 0px;
 	background-color: initial;
 	font-size: 13px;
 	float: left;
@@ -156,7 +155,7 @@ table.dataTable thead .sorting_desc:after {
 	border: 2px dashed #DDD;
 	width: 100%;
 	text-align: center;
-	padding: 10px;
+	padding: 6px;
 }
 
 .pointer {
@@ -318,7 +317,7 @@ p.edicao {
 
 .upload-text {
 	color: #CCC;
-	font-size: 12pt;
+	font-size: 8pt;
 	font-weight: bold;
 	padding: 10px;
 	text-align: center;
@@ -595,14 +594,6 @@ a {
 	cursor: not-allowed !important;
 }
 
-.drop-box {
-	background: #F8F8F8;
-	border: 2px dashed #DDD;
-	width: 100%;
-	text-align: center;
-	padding: 10px;
-}
-
 input[type=checkbox], input[type=radio] {
 	margin: 2px 0 0;
 }
@@ -696,4 +687,8 @@ fieldset.consulta > legend {
   pointer-events: none !important; 
   cursor: default !important; 
   background-image: none !important; 
+}
+
+.ng-touched.ng-invalid{
+    border: 1px solid red;
 }

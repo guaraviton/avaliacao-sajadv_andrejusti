@@ -12,11 +12,7 @@ function ResponsavelController($scope, $location, toaster, ResponsavelResource, 
 	    })
 	};
 
-    $scope.editar = function(responsavel){
-        $location.path('/responsavel/'+responsavel.id);
-    };
-
-    $scope.incluir = function(){
+    $scope.cadastrar = function(responsavel){
         $location.path('/responsavel/0');
     };
 
