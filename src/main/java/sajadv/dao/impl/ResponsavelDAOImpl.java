@@ -31,4 +31,5 @@ public class ResponsavelDAOImpl extends CrudDAOImpl<Responsavel> implements Resp
 		criteria.addOrder(Order.asc("nome"));
         return (List<Responsavel>) template.findByCriteria(criteria);
 	}
+
 }

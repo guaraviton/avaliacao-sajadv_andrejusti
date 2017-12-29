@@ -110,5 +110,4 @@ public class Processo extends AutoIncrementIdEntity{
 	public void setResponsaveis(List<ProcessoResponsavel> responsaveis) {
 		this.responsaveis = responsaveis;
 	}
-	
 }

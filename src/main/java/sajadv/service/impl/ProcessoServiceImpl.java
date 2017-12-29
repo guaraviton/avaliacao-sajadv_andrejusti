@@ -1,5 +1,7 @@
 package sajadv.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +19,10 @@ public class ProcessoServiceImpl extends CrudServiceImpl<Processo> implements Pr
 	@Override
 	public CrudDAO<Processo> getDAO() {
 		return processoDAO;
+	}
+
+	@Override
+	public List<Processo> query(Integer idResponsavel) {
+		return processoDAO.query(idResponsavel);
 	}
 }

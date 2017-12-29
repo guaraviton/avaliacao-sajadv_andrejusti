@@ -18,7 +18,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.google.gson.Gson;
 
 import sajadv.common.util.ValidationUtil;
+import sajadv.entity.Processo;
 import sajadv.entity.Responsavel;
+import sajadv.service.ProcessoService;
 import sajadv.service.ResponsavelService;
 
 @RestController
@@ -27,6 +29,9 @@ public class ResponsavelController{
 	
 	@Autowired
 	ResponsavelService responsavelService;
+	
+	@Autowired
+	ProcessoService processoService;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -47,10 +52,10 @@ public class ResponsavelController{
 		return true;
     }
 	
-	@RequestMapping(value="/all", method = RequestMethod.GET)
+	@RequestMapping(value="/{id}/processos", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-    public List<Responsavel> query() {
-		return responsavelService.list();
+    public List<Processo> query(@PathVariable Integer id) {
+		return processoService.query(id);
     }
 	
 	@RequestMapping(method = RequestMethod.POST)

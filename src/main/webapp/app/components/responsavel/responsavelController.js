@@ -1,6 +1,6 @@
-appController.controller('ResponsavelController', ['$scope', '$upload', '$location', 'toaster', 'DTOptionsBuilder', 'ResponsavelResource', 'responsavel', ResponsavelController]);
+appController.controller('ResponsavelController', ['$scope', '$upload', '$location', 'toaster', 'DTOptionsBuilder', 'ResponsavelResource', 'responsavel', 'processos', ResponsavelController]);
 
-function ResponsavelController($scope, $upload, $location, toaster, DTOptionsBuilder, ResponsavelResource, responsavel) {
+function ResponsavelController($scope, $upload, $location, toaster, DTOptionsBuilder, ResponsavelResource, responsavel, processos) {
     
 	$scope.dtOptions = DTOptionsBuilder.newOptions()
 		.withOption('bFilter', false)
@@ -11,6 +11,7 @@ function ResponsavelController($scope, $upload, $location, toaster, DTOptionsBui
 	
     if(responsavel){
         $scope.responsavel = responsavel;
+        $scope.processos = processos;
     }
     
     $scope.consultar = function(){

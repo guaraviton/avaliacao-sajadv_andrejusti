@@ -73,14 +73,14 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="responsavel in responsaveis" ng-click="editar(cliente)">
-                     <td>{{responsavel.nome}}</td>
-                     <td>{{responsavel.cpf}}</td>                     
-                     <td>{{responsavel.cpf}}</td>
-                     <td class="acoes">
-                     	<i class="fa fa-pencil" title="Alterar" ng-click="editar(responsavel)"></i>
-                     	<i class="fa fa-times" title="Excluir" ng-click="excluir(responsavel)"></i>
-                     </td>
+                  <tr ng-repeat="processo in processos" ng-click="editar(cliente)">
+                     <td>{{processo.numeroProcessoUnificado}}</td>
+                     <td>{{processo.dataDistribuicao | date:'dd/MM/yyyy' }}</td>                     
+                     <td>{{processo.segredoJustica}}</td>
+                     <td>{{processo.pastaFisicaCliente}}</td>
+                     <td>{{processo.descricao}}</td>                     
+                     <td>{{processo.situacao.nome}}</td>
+                     <td>{{processo.descricao}}</td>
                   </tr>
                </tbody>
             </table>

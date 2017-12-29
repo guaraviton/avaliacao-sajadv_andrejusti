@@ -13,7 +13,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       	resolve: {	   	    	
       		responsavel: function() {	 	    		
        			return null;
-    		}   	
+    		},
+    		processos: function() {	 	    		
+       			return null;
+    		}
 		}
 	})	
 	.when('/responsavel/:id', {
@@ -25,7 +28,13 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     				return;
     			}		    
        			return ResponsavelResource.get({id: $route.current.params.id}).$promise;
-    		}]    	
+    		}],
+    		processos: ['ResponsavelResource', '$route', function(ResponsavelResource, $route) {	 
+	    		if($route.current.params.id == 0){
+    				return;
+    			}		    
+       			return ResponsavelResource.processos({id: $route.current.params.id}).$promise;
+    		}] 
 		}
 	})
 	.when('/processo', {
