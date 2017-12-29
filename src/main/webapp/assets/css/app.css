@@ -188,10 +188,6 @@ table.dataTable thead .sorting_desc:after {
 	padding-left: 0px;
 }
 
-.dataTable>tbody>tr:hover {
-	cursor: pointer;
-}
-
 .btn-alert-list {
 	display: block;
 	padding: 0;
@@ -677,6 +673,7 @@ fieldset.consulta > legend {
 
 .acoes > i{
 	margin-right: 5px;
+	cursor: pointer;
 }
 
 .no-sort::after { 
@@ -691,4 +688,9 @@ fieldset.consulta > legend {
 
 .ng-touched.ng-invalid{
     border: 1px solid red;
+}
+
+.foto_responsavel{
+	height: 115px;
+    width: 115px;
 }

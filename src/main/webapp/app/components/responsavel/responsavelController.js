@@ -1,7 +1,14 @@
-appController.controller('ResponsavelController', ['$scope', '$location', 'toaster', 'ResponsavelResource', 'responsavel', ResponsavelController]);
+appController.controller('ResponsavelController', ['$scope', '$upload', '$location', 'toaster', 'DTOptionsBuilder', 'ResponsavelResource', 'responsavel', ResponsavelController]);
 
-function ResponsavelController($scope, $location, toaster, ResponsavelResource, responsavel) {
+function ResponsavelController($scope, $upload, $location, toaster, DTOptionsBuilder, ResponsavelResource, responsavel) {
     
+	$scope.dtOptions = DTOptionsBuilder.newOptions()
+		.withOption('bFilter', false)
+		.withOption('paging', false)
+		.withOption('bSort', false)
+		.withOption('bInfo', false)
+		.withOption('searching', false);
+	
     if(responsavel){
         $scope.responsavel = responsavel;
     }
@@ -39,11 +46,19 @@ function ResponsavelController($scope, $location, toaster, ResponsavelResource, 
     }
 
     $scope.salvar = function () {
-        ResponsavelResource.save($scope.responsavel,
-            function(data) {
-       			toaster.pop('success', null, 'Responsável salvo com sucesso');
-        		$scope.responsavel.id = data.id;
+        $upload.upload({
+            url: 'api/responsavel',                
+            data: $scope.responsavel,                             
+            file: $scope.imagem ? $scope.imagem[0] : null            
+        })
+        .success(function (data, status, headers, config) {
+            toaster.pop('success', null, 'Responsável salvo com sucesso');
+            $scope.responsavel.id = data.id;
+            if($scope.imagem){
+            	$scope.imagem = null;	
+            	angular.element('#fotoResponsavel').attr('src', 'http://localhost:8080/gestaodeprocessos/api/responsavel/'+$scope.responsavel.id+'/foto?'+Date.now());
+            	$scope.responsavel.hasFoto = true;
             }
-        )
-    };
+        });
+    }
 }

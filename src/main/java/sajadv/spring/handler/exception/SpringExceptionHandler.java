@@ -2,6 +2,8 @@ package sajadv.spring.handler.exception;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolation;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import sajadv.common.exception.BundleException;
 import sajadv.common.exception.DAOException;
 import sajadv.common.exception.GlobalException;
+import sajadv.common.exception.ValidacaoException;
 import sajadv.common.util.MessageUtils;
 import sajadv.spring.handler.exception.dto.ValidationErrorDTO;
 
@@ -79,6 +82,17 @@ public class SpringExceptionHandler {
 			return MessageUtils.get(exception.getMessage());
 		}
 		return exception.getMessage();
+	}
+	
+	@ExceptionHandler({ ValidacaoException.class })
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ValidationErrorDTO handleValidacaoException(ValidacaoException mav) {
+		ValidationErrorDTO dto = new ValidationErrorDTO();
+		for(ConstraintViolation violation :  mav.getViolations()){
+			dto.addError(violation.getMessage());
+		}
+		return dto;
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class })

@@ -28,4 +28,28 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     		}]    	
 		}
 	})
+	.when('/processo', {
+		controller : 'ProcessoController',
+		templateUrl : 'app/components/processo/processoListar.html',
+      	resolve: {	   	    	
+      		processo: function() {	 	    		
+       			return null;
+    		},
+    		situacoes: ['SituacaoResource', function(SituacaoResource) {	 	    			   
+	       		return SituacaoResource.query().$promise;
+	    	}]
+		}
+	})	
+	.when('/processo/:id', {
+		controller : 'ProcessoController',
+		templateUrl : 'app/components/processo/processoEditar.html',
+      	resolve: {	   	    	
+      		processo: ['ProcessoResource', '$route', function(ProcessoResource, $route) {	 
+	    		if($route.current.params.id == 0){
+    				return;
+    			}		    
+       			return ProcessoResource.get({id: $route.current.params.id}).$promise;
+    		}]    	
+		}
+	})
 }]);
