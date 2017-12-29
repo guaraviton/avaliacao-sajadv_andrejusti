@@ -11,6 +11,11 @@ function ResponsavelController($scope, $location, toaster, ResponsavelResource, 
 			$scope.responsaveis = result;
 	    })
 	};
+	
+    $scope.editar = function(responsavel){
+        $location.path('/responsavel/'+responsavel.id);
+    };
+
 
     $scope.cadastrar = function(responsavel){
         $location.path('/responsavel/0');
@@ -36,8 +41,8 @@ function ResponsavelController($scope, $location, toaster, ResponsavelResource, 
     $scope.salvar = function () {
         ResponsavelResource.save($scope.responsavel,
             function(data) {
-        		$scope.responsavel.id = responsavel.id;
-                toaster.pop('success', null, 'Responsável salvo com sucesso');
+       			toaster.pop('success', null, 'Responsável salvo com sucesso');
+        		$scope.responsavel.id = data.id;
             }
         )
     };

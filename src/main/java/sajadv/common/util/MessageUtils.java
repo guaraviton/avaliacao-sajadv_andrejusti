@@ -6,7 +6,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-public abstract class MessageUtils {
+public class MessageUtils {
 
 	private static MessageSource messageSource;
 	

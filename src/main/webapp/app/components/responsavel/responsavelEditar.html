@@ -3,6 +3,7 @@
 		<ol class="breadcrumb">
 			<li><a href="#redirectToHome">Gestão de Processos</a></li>
 			<li class="active">Editar Responsável</li>
+			<li class="active" ng-if="responsavel.id">{{responsavel.nome}}</li>
 		</ol>
 	</div>
 </div>
@@ -24,7 +25,7 @@
 					<div class="row">
 						<div class="form-group col-md-3">
 							<label>Nome</label>
-							<input class="form-control" placeholder="Obrigatório" ng-model="cliente.nome" maxlength="1000" required>
+							<input class="form-control" placeholder="Obrigatório" ng-model="responsavel.nome" maxlength="1000" required>
 						</div>
 						<div class="form-group col-md-2">
 							<label>Cpf</label>
@@ -40,7 +41,7 @@
 	                	</div>
 	                 	<div class="form-group col-md-2">
 		                   	<label>&nbsp;</label>
-		                   	<button id="buttonCadastrar" ng-disabled="responsavelForm.$invalid" class="btn btn-default btn-app" ng-click="cadastrar()">Cadastrar</button>
+		                   	<button id="buttonCadastrar" ng-disabled="responsavelForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">Cadastrar</button>
 		                </div>
 					</div>
 				</form>
