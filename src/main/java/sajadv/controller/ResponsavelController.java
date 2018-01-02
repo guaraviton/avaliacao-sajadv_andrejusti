@@ -17,6 +17,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.gson.Gson;
 
+import sajadv.common.util.StringUtils;
 import sajadv.common.util.ValidationUtil;
 import sajadv.entity.Processo;
 import sajadv.entity.Responsavel;
@@ -75,7 +76,7 @@ public class ResponsavelController{
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public List<Responsavel> query(@RequestParam(required=false) String nome, @RequestParam(required=false) String cpf, @RequestParam(required=false) String numeroProcessoUnificado) {
-        return responsavelService.query(nome, cpf, numeroProcessoUnificado);
+    public List<Responsavel> query(@RequestParam(required=false) String nome, @RequestParam(required=false) String cpf, @RequestParam(required=false) String numeroProcessoUnificado, @RequestParam(required=false) String nomeEmailCpfLike) {
+        return responsavelService.query(nome, cpf, numeroProcessoUnificado, nomeEmailCpfLike != null ? StringUtils.decode(nomeEmailCpfLike) : nomeEmailCpfLike);
     }
 }

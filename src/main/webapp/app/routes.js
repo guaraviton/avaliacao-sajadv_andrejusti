@@ -58,7 +58,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     				return;
     			}		    
        			return ProcessoResource.get({id: $route.current.params.id}).$promise;
-    		}]    	
+    		}],
+    		situacoes: ['SituacaoResource', function(SituacaoResource) {	 	    			   
+	       		return SituacaoResource.query().$promise;
+	    	}]    	
 		}
 	})
 }]);

@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity 
 @Table(name = "processo")
@@ -22,16 +25,20 @@ public class Processo extends AutoIncrementIdEntity{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
 	private String numeroProcessoUnificado;
 	
 	private Date dataDistribuicao;
 	
 	private String segredoJustica;
 	
+	@Length(max = 50)
 	private String pastaFisicaCliente;
 	
+	@Length(max = 1000)
 	private String descricao;
 
+	@NotNull
 	private Situacao situacao;
 	
 	private Processo processoVinculado;
@@ -47,7 +54,7 @@ public class Processo extends AutoIncrementIdEntity{
 		this.numeroProcessoUnificado = numeroProcessoUnificado;
 	}
 
-	@Column(name="data_distribuicao")
+	@Column(name="data_distribuicao", nullable=true)
 	public Date getDataDistribuicao() {
 		return dataDistribuicao;
 	}
@@ -56,7 +63,7 @@ public class Processo extends AutoIncrementIdEntity{
 		this.dataDistribuicao = dataDistribuicao;
 	}
 
-	@Column(name="segredo_justica")
+	@Column(name="segredo_justica", nullable=true)
 	public String getSegredoJustica() {
 		return segredoJustica;
 	}
@@ -65,7 +72,7 @@ public class Processo extends AutoIncrementIdEntity{
 		this.segredoJustica = segredoJustica;
 	}
 
-	@Column(name="pasta_fisica_cliente")
+	@Column(name="pasta_fisica_cliente", nullable=true)
 	public String getPastaFisicaCliente() {
 		return pastaFisicaCliente;
 	}

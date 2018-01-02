@@ -2,7 +2,7 @@
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="#redirectToHome">Gestão de Processos</a></li>
-			<li class="active">Editar Processo</li>
+			<li class="active">Cadastrar Processo</li>
 			<li class="active" ng-if="responsavel.id">{{responsavel.nome}}</li>
 		</ol>
 	</div>
@@ -11,79 +11,84 @@
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-12">
-				<form role="form" name="responsavelForm" novalidate>
-					<div class="row" style="margin-bottom: 16px;">
-						<div class="form-group" style="padding-left: 15px; width: 147px; height: 132px; margin-bottom: 0; display: -webkit-box">
-							<div class="drop-box" style="margin-right: 10px">     
-								<div ng-if="responsavel.id && responsavel.hasFoto" >                         
-									<img id="fotoResponsavel" class="foto_responsavel" src="/gestaodeprocessos/api/responsavel/{{responsavel.id}}/foto/">
-								</div>
-								<i ng-if="!responsavel.hasFoto" class="fa fa-5x fa-user" style="margin-top: 18px;"></i>
+				<form role="form" name="processoForm" novalidate>
+					<div class="row"> 
+	             		<div class="form-group col-md-3">
+	                   		<label>Número Processo Unificado</label>
+	                   		<input class="form-control" mask="0000000-00.0000.0.00.0000" required ng-model="processo.numeroProcessoUnificado">
+	                	</div>
+		                <div class="form-group col-md-2">
+	                   		<label>Data Distribuição</label>  
+							<div class="input-group">
+								<input class="form-control" title="Por favor, preencha este campo no formato: DD/MM/YYYY" uib-datepicker-popup="dd/MM/yyyy" ng-model="processo.dataDistribuicao" is-open="processo.dataDistribuicaoOpened" mask="99/99/9999"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openDataDistribuicao()">
+										<i class="fa fa-calendar"></i>
+									</button>                                
+								</span>
 							</div>
-							<button class="btn btn-default btn-app" style="margin-top: 99px; height: 33px;" ng-file-select ng-model="imagem" drag-over-class="dragover" ng-multiple="false" allow-dir="true" accept="image/*">                                
-								Alterar Foto&nbsp;<i class="fa fa-upload"></i>
-							</button>
-							<div ng-if="imagem" style=" margin-top: 116px; margin-left: 10px;" class="upload-item-text" ng-repeat="imagem in imagem" style="font:smaller">
-								{{imagem.name}}
+	                	</div>
+	                	<div class="form-group col-md-2">
+                        	<label>Situação</label>
+                        	<select class="form-control" required ng-model="processo.situacao" ng-options="situacao.nome for situacao in situacoes track by situacao.id" >
+                          		<option value="">Todos</option>                          
+                        	</select>                        
+                     	</div>
+                     	<div class="form-group col-md-3">
+	                   		<label>Pasta física cliente</label>  
+	                   		<input class="form-control" maxlength="50" ng-model="processo.pastaFisicaCliente">
+	                	</div>
+	                	<div class="form-group col-md-2">
+	                		<label>&nbsp;</label>
+	                		<div class="checkbox" style="margin-top: 13px;">
+			               		<label>
+			                   		<input type="checkbox" ng-model="processoTratamentoPerda.somenteNaoExecutados" value="">Segredo de Justiça
+								</label>
 							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col-md-3">
-							<label>Nome</label>
-							<input class="form-control" maxlength="150" placeholder="Obrigatório" ng-model="responsavel.nome" maxlength="1000" required>
-						</div>
-						<div class="form-group col-md-2">
-							<label>Cpf</label>
-							<input class="form-control" placeholder="Obrigatório" mask="000.000.000-00" ng-pattern="/^([0-9]{3}\.?){3}-?[0-9]{2}$/" ng-model="responsavel.cpf" required>
-						</div>
-						<div class="form-group col-md-3">
-							<label>Email</label>
-							<input type="email" maxlength="400" placeholder="Obrigatório" class="form-control" ng-model="responsavel.email" required>
-						</div>
-						<div class="form-group col-md-2">
-	                   		<label>&nbsp;</label>
-	                   		<button id="buttonConsultar" class="btn btn-default btn-app" ng-click="voltar()">Voltar</button>
+			           </div> 
+	             	</div>
+	             	<div class="row"> 
+	             		<div class="form-group col-md-5">
+	                   		<label>Responsáveis</label>
+	                   		<div class="input-group select2-bootstrap-append">
+								<ui-select multiple required sortable="true" ng-model="processo.responsaveis" required>
+		                        	<ui-select-match placeholder="Informe Nome, E-mail ou CPF">{{$item.nome}}</ui-select-match>
+	                           		<ui-select-choices repeat="responsavel in responsaveis" refresh="buscarResponsaveis($select.search)" refresh-delay="10" minimum-input-length="4">
+	                              		<div ng-bind-html="responsavel.nome | highlight: $select.search"></div>
+	                              		<div ng-bind-html="responsavel.email | highlight: $select.search"></div>
+	                              		<div ng-bind-html="responsavel.cpf | highlight: $select.search"></div>
+	                           		</ui-select-choices>
+		                        </ui-select>
+		                        <span class="input-group-btn">
+			                        <button type="button" ng-click="processo.responsaveis = undefined" class="btn btn-default" title="Limpar Responsável">
+			                        	<i class="fa fa-trash-o"></i>
+			                        </button>
+		                        </span>
+		                     </div>
+	                	</div>
+	                	<div class="form-group col-md-7">
+	                   		<label>Descrição</label>
+	                   		<textarea class="form-control" rows="4" maxlength="1000" ng-model="processo.descricao">
+	                   		</textarea>
+	                	</div>
+	                </div>
+	                <div class="row"> 
+	                	<div class="form-group col-md-12">
+	                   		<label>Processo vinculado</label>
+	                   		<textarea class="form-control" rows="4" ng-model="processo.processoVinculado">
+	                   		</textarea>
+	                	</div>
+	                </div>
+	                <div class="row"> 
+	                	<div class="form-group col-md-2">
+	                   		<button id="buttonVoltar" class="btn btn-default btn-app" ng-click="voltar()">Voltar</button>
 	                	</div>
 	                 	<div class="form-group col-md-2">
-		                   	<label>&nbsp;</label>
-		                   	<button id="buttonCadastrar" ng-disabled="responsavelForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">Cadastrar</button>
+		                   	<button id="buttonCadastrar" ng-disabled="processoForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">Cadastrar</button>
 		                </div>
-					</div>
+		             </div>   
 				</form>
 			</div>
 		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-lg-12">
-		<fieldset class="consulta">
-			<legend style="font-size: 13px !important;">Processos que é responsável</legend>
-			<table datatable="ng" dt-options="dtOptions" class="table-striped row-border hover" style="margin: 0;">
-               <thead>
-                  <tr>
-                     <th>Número processo unificado</th>
-                     <th>Data distribuição</th>
-                     <th>Segredo de Justiça</th>
-                     <th>Pasta física cliente</th>
-                     <th>Descrição</th>
-                     <th>Situação</th>
-                     <th>Responsáveis</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr ng-repeat="responsavel in responsaveis" ng-click="editar(cliente)">
-                     <td>{{responsavel.nome}}</td>
-                     <td>{{responsavel.cpf}}</td>                     
-                     <td>{{responsavel.cpf}}</td>
-                     <td class="acoes">
-                     	<i class="fa fa-pencil" title="Alterar" ng-click="editar(responsavel)"></i>
-                     	<i class="fa fa-times" title="Excluir" ng-click="excluir(responsavel)"></i>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-		</fieldset>
 	</div>
 </div>

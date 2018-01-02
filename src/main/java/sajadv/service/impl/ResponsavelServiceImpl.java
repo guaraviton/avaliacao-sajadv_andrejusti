@@ -22,8 +22,8 @@ public class ResponsavelServiceImpl extends CrudServiceImpl<Responsavel> impleme
 	}
 
 	@Override
-	public List<Responsavel> query(String nome, String cpf, String numeroProcessoUnificado) {
-		return responsavelDAO.query(nome, cpf, numeroProcessoUnificado);
+	public List<Responsavel> query(String nome, String cpf, String numeroProcessoUnificado, String nomeEmailCpfLike) {
+		return responsavelDAO.query(nome, cpf, numeroProcessoUnificado, nomeEmailCpfLike);
 	}
 
 }
