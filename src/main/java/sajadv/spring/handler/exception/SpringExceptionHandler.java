@@ -2,8 +2,6 @@ package sajadv.spring.handler.exception;
 
 import java.util.List;
 
-import javax.validation.ConstraintViolation;
-
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,10 +85,10 @@ public class SpringExceptionHandler {
 	@ExceptionHandler({ ValidacaoException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ValidationErrorDTO handleValidacaoException(ValidacaoException mav) {
+	public ValidationErrorDTO handleValidacaoException(ValidacaoException exception) {
 		ValidationErrorDTO dto = new ValidationErrorDTO();
-		for(ConstraintViolation violation :  mav.getViolations()){
-			dto.addError(violation.getMessage());
+		for(String mensagem :  exception.getMensagens()){
+			dto.addError(mensagem);
 		}
 		return dto;
 	}

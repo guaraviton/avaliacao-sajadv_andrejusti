@@ -46,7 +46,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     		},
     		situacoes: ['SituacaoResource', function(SituacaoResource) {	 	    			   
 	       		return SituacaoResource.query().$promise;
-	    	}]
+	    	}],
+	    	processosVinculados: function() {	 	    		
+       			return null;
+    		}
 		}
 	})	
 	.when('/processo/:id', {
@@ -61,7 +64,13 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     		}],
     		situacoes: ['SituacaoResource', function(SituacaoResource) {	 	    			   
 	       		return SituacaoResource.query().$promise;
-	    	}]    	
+	    	}],
+	    	processosVinculados: ['ProcessoResource', '$route', function(ProcessoResource, $route) {	 
+	    		if($route.current.params.id == 0){
+    				return;
+    			}		    
+       			return ProcessoResource.vinculados({id: $route.current.params.id}).$promise;
+    		}],
 		}
 	})
 }]);

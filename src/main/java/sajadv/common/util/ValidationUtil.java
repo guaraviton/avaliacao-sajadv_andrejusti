@@ -1,5 +1,7 @@
 package sajadv.common.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -17,8 +19,11 @@ public class ValidationUtil {
 		Validator validator = factory.getValidator();
 		Set<ConstraintViolation<BaseEntity>> violations = validator.validate(entity);
 		if(!violations.isEmpty()){
-			throw new ValidacaoException(violations);
+			List<String> mensagens = new ArrayList<String>();
+			for(ConstraintViolation<BaseEntity> constraintViolation : violations){
+				mensagens.add(constraintViolation.getMessage());
+			}
+			throw new ValidacaoException(mensagens);
 		}
 	}
-	
 }

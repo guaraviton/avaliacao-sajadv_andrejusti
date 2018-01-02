@@ -20,7 +20,7 @@
 		                <div class="form-group col-md-2">
 	                   		<label>Data Distribuição</label>  
 							<div class="input-group">
-								<input class="form-control" title="Por favor, preencha este campo no formato: DD/MM/YYYY" uib-datepicker-popup="dd/MM/yyyy" ng-model="processo.dataDistribuicao" is-open="processo.dataDistribuicaoOpened" mask="99/99/9999"/>
+								<input class="form-control" title="Por favor, preencha este campo no formato: DD/MM/YYYY" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="optionsDataDistribuicao" ng-model="processo.dataDistribuicao" is-open="dataDistribuicaoOpened" mask="99/99/9999"/>
 								<span class="input-group-btn">
 									<button type="button" class="btn btn-default" ng-click="openDataDistribuicao()">
 										<i class="fa fa-calendar"></i>
@@ -51,7 +51,7 @@
 	             		<div class="form-group col-md-5">
 	                   		<label>Responsáveis</label>
 	                   		<div class="input-group select2-bootstrap-append">
-								<ui-select multiple required sortable="true" ng-model="processo.responsaveisArray">
+								<ui-select multiple limit="3" required sortable="true" ng-model="processo.responsaveisArray">
 		                        	<ui-select-match placeholder="Informe Nome, E-mail ou CPF">{{$item.nome}}</ui-select-match>
 	                           		<ui-select-choices repeat="responsavel in responsaveis" refresh="buscarResponsaveis($select.search)" refresh-delay="10" minimum-input-length="4">
 	                              		<div ng-bind-html="responsavel.nome | highlight: $select.search"></div>
@@ -110,7 +110,17 @@
 	<div class="col-lg-12">
 		<fieldset class="consulta">
 			<legend style="font-size: 13px !important;">Processos vinculados(filhos)</legend>
-			<label>Número processo unificado:  - Data distribuição:  - Situação: </label>
+			<div style="display: flex;" ng-repeat="processo in processosVinculados">
+				<span ng-if="$index != 0" class="vinculado" style="margin-left: {{$index == 1 ? 0 : $index * 20}}px"></span>
+				<label class="processos-vinculados">
+					{{$index + 1}} Número processo unificado: {{processo.numeroProcessoUnificado}} - Data distribuição: {{processo.dataDistribuicao | date:'dd/MM/yyyy'}} - Situação: {{processo.situacao.nome}} {{processo.segredoJustica == 'S' ? '(Segredo de Justiça)' : ''}}
+				</label>
+			</div>
+			<div style="display: flex;" ng-if="processosVinculados.length == 0">
+				<label>
+					Não existem processos vinculados
+				</label>
+			</div>
 		</fieldset>
 	</div>
 </div>

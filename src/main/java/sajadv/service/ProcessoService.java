@@ -8,4 +8,6 @@ public interface ProcessoService extends CrudService<Processo>{
 
 	List<Processo> query(String numeroProcessoUnificado, Integer idResponsavel);
 
+	List<Processo> getVinculados(Integer id);
+
 }

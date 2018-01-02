@@ -19,7 +19,7 @@ public class ProcessoDAOImpl extends CrudDAOImpl<Processo> implements ProcessoDA
 
 	@Override
 	public List<Processo> query(String numeroProcessoUnificado, Integer idResponsavel) {
-		DetachedCriteria criteria= DetachedCriteria.forClass(Processo.class, "q1");
+		DetachedCriteria criteria= DetachedCriteria.forClass(Processo.class);
 		
 		if(idResponsavel != null){
 			criteria.createAlias("responsaveis", "responsaveis", JoinType.LEFT_OUTER_JOIN);
@@ -34,6 +34,14 @@ public class ProcessoDAOImpl extends CrudDAOImpl<Processo> implements ProcessoDA
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc("numeroProcessoUnificado"));
         return (List<Processo>) template.findByCriteria(criteria);
+	}
+
+	@Override
+	public Processo getVinculado(Integer id) {
+		DetachedCriteria criteria= DetachedCriteria.forClass(Processo.class);
+		criteria.add(Restrictions.eq("processoVinculado.id", id));
+		List<Processo> result = (List<Processo>) template.findByCriteria(criteria);
+		return result.isEmpty() ? null : result.get(0);
 	}
 
 }

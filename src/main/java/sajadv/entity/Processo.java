@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 
 @Entity 
@@ -111,6 +113,7 @@ public class Processo extends AutoIncrementIdEntity{
 	}
 
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="processo", orphanRemoval = true, cascade = {CascadeType.ALL})
+	@Fetch(value = FetchMode.SUBSELECT)
 	public List<ProcessoResponsavel> getResponsaveis() {
 		return responsaveis;
 	}

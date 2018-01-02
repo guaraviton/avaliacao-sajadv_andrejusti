@@ -1,8 +1,6 @@
 package sajadv.common.exception;
 
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
+import java.util.List;
 
 /**
  * Excecao generica para representar as validacoes feitas fora do binding result
@@ -18,14 +16,13 @@ public class ValidacaoException extends GlobalException {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Set<ConstraintViolation<? extends Object>> violations;
+	private List<String> mensagens;
 
-	public ValidacaoException(Object violations) {
-		this.violations = (Set<ConstraintViolation<? extends Object>>) violations;
+	public ValidacaoException(List<String> mensagens) {
+		this.mensagens = mensagens;
 	}
 
-	public Set<ConstraintViolation<? extends Object>> getViolations() {
-		return violations;
+	public List<String> getMensagens() {
+		return mensagens;
 	}
-
 }

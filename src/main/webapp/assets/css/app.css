@@ -6,6 +6,11 @@ body {
 	height: 100%
 }
 
+img, a {
+	border:none;
+	outline: none;
+}
+
 .hide {
 	display: none;
 }
@@ -694,4 +699,19 @@ fieldset.consulta > legend {
 .foto_responsavel{
 	height: 115px;
     width: 115px;
+}
+
+label.processos-vinculados{
+	margin: 0 3px 8px 0px; 
+	border: 1px solid; 
+	padding: 10px; 
+	border-radius: 5px;
+	display: flex;
+}
+
+span.vinculado{
+	background: url(../imgs/vinculado.png) no-repeat top left;
+    height: 40px;
+    width: 36px;
+    margin-right: 7px;
 }

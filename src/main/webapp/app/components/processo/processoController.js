@@ -1,11 +1,13 @@
-appController.controller('ProcessoController', ['$scope', '$upload', '$location', 'toaster', 'ProcessoResource', 'ResponsavelResource', 'processo', 'situacoes', ProcessoController]);
+appController.controller('ProcessoController', ['$scope', '$upload', '$location', 'toaster', 'ProcessoResource', 'ResponsavelResource', 'processo', 'situacoes', 'processosVinculados', ProcessoController]);
 
-function ProcessoController($scope, $upload, $location, toaster, ProcessoResource, ResponsavelResource, processo, situacoes) {
+function ProcessoController($scope, $upload, $location, toaster, ProcessoResource, ResponsavelResource, processo, situacoes, processosVinculados) {
     
 	$scope.situacoes = situacoes;
 	
 	if(processo){
         $scope.processo = processo;
+        $scope.isSomenteLeitura = ($scope.processo.situacao.nome = 'Finalizado');
+        $scope.processosVinculados = processosVinculados;
         $scope.processo.responsaveisArray = [];
         angular.forEach($scope.processo.responsaveis, function(processoResponsavel, index) {
         	processoResponsavel.responsavel.idAssociacao = processoResponsavel.id;
@@ -33,11 +35,11 @@ function ProcessoController($scope, $upload, $location, toaster, ProcessoResourc
     };
 	
 	$scope.openDataDistribuicaoInicio = function() {
-        $scope.processo.dataDistribuicaoInicioOpened = true;   
+        $scope.dataDistribuicaoInicioOpened = true;   
     };
     
     $scope.openDataDistribuicaoFim = function() {
-        $scope.processo.dataDistribuicaoFimOpened = true;   
+        $scope.dataDistribuicaoFimOpened = true;   
     };
     
     $scope.cadastrar = function(responsavel){
@@ -49,8 +51,12 @@ function ProcessoController($scope, $upload, $location, toaster, ProcessoResourc
     };
     
     $scope.openDataDistribuicao = function() {
-        $scope.processo.dataDistribuicaoOpened = true;   
+        $scope.dataDistribuicaoOpened = true;   
     };
+    
+    $scope.optionsDataDistribuicao = {
+    	maxDate: new Date()
+    }
     
     $scope.buscarResponsaveis = function(nomeEmailCpfLike) {
     	ResponsavelResource.query({
