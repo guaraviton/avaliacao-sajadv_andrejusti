@@ -23,8 +23,8 @@ public class ProcessoServiceImpl extends CrudServiceImpl<Processo> implements Pr
 	}
 
 	@Override
-	public List<Processo> query(Integer idResponsavel) {
-		return processoDAO.query(idResponsavel);
+	public List<Processo> query(String numeroProcessoUnificado, Integer idResponsavel) {
+		return processoDAO.query(numeroProcessoUnificado, idResponsavel);
 	}
 	
 	@Override

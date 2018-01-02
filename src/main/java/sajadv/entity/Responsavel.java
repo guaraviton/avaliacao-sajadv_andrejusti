@@ -1,12 +1,7 @@
 package sajadv.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,8 +21,6 @@ public class Responsavel extends AutoIncrementIdEntity{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private List<ProcessoResponsavel> processos = new ArrayList<ProcessoResponsavel>(0);
 	
 	@NotEmpty
 	@Length(max = 100)
@@ -81,14 +74,5 @@ public class Responsavel extends AutoIncrementIdEntity{
 
 	public void setFoto(byte[] foto) {
 		this.foto = foto;
-	}
-
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="responsavel")
-	public List<ProcessoResponsavel> getProcessos() {
-		return processos;
-	}
-
-	public void setProcessos(List<ProcessoResponsavel> processos) {
-		this.processos = processos;
 	}
 }

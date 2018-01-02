@@ -24,7 +24,6 @@ function ResponsavelController($scope, $upload, $location, toaster, DTOptionsBui
         $location.path('/responsavel/'+responsavel.id);
     };
 
-
     $scope.cadastrar = function(responsavel){
         $location.path('/responsavel/0');
     };

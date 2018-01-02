@@ -31,9 +31,8 @@ public class ProcessoResponsavel extends AutoIncrementIdEntity {
 		this.processo = processo;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "responsavel_id", nullable = false)
-	@JsonIgnore
 	public Responsavel getResponsavel() {
 		return responsavel;
 	}

@@ -2,8 +2,35 @@ appController.controller('ProcessoController', ['$scope', '$upload', '$location'
 
 function ProcessoController($scope, $upload, $location, toaster, ProcessoResource, ResponsavelResource, processo, situacoes) {
     
-	$scope.processo = {};
 	$scope.situacoes = situacoes;
+	
+	if(processo){
+        $scope.processo = processo;
+        $scope.processo.responsaveisArray = [];
+        angular.forEach($scope.processo.responsaveis, function(processoResponsavel, index) {
+        	processoResponsavel.responsavel.idAssociacao = processoResponsavel.id;
+        	$scope.processo.responsaveisArray.push(processoResponsavel.responsavel);               
+        });
+        if($scope.processo.dataDistribuicao){
+        	$scope.processo.dataDistribuicao = new Date($scope.processo.dataDistribuicao);                    
+        }
+    }
+	
+    $scope.buscarProcessos = function(numeroProcessoUnificado){
+    	ProcessoResource.query({numeroProcessoUnificado: numeroProcessoUnificado}, function(result) {
+			$scope.processos = result;
+	    })
+	};
+	
+    $scope.consultar = function(){
+    	ProcessoResource.query({numeroProcessoUnificado: $scope.processo.numeroProcessoUnificado}, function(result) {
+			$scope.processos = result;
+	    })
+	};
+	
+    $scope.editar = function(processo){
+        $location.path('/processo/'+processo.id);
+    };
 	
 	$scope.openDataDistribuicaoInicio = function() {
         $scope.processo.dataDistribuicaoInicioOpened = true;   
@@ -34,16 +61,28 @@ function ProcessoController($scope, $upload, $location, toaster, ProcessoResourc
     };
     
     $scope.salvar = function () {
-    	responsaveis = $scope.processo.responsaveis;
     	$scope.processo.responsaveis = [];
-    	angular.forEach(responsaveis, function(responsavel, index) {
-    		$scope.processo.responsaveis.push({responsavel: responsavel});               
+    	angular.forEach($scope.processo.responsaveisArray, function(responsavel, index) {
+    		$scope.processo.responsaveis.push({id: responsavel.idAssociacao, 'responsavel': responsavel});               
         });
     	ProcessoResource.save($scope.processo,
             function(data) {
                 toaster.pop('success', null, 'Processo salvo com sucesso');
+                $scope.processo.id = data.id;
             }
         ) 
-        $scope.processo.responsaveis = responsaveis;
+    }
+    
+    $scope.excluir = function (processo) {
+    	$scope.confirm('Excluir Processo', 'Deseja excluir o processo ' + processo.numeroProcessoUnificado + '?', 'Não', 'Sim', function(){$scope.confirmacaoExclusao(processo)});
+    };
+    
+    $scope.confirmacaoExclusao = function (processo) {
+    	ProcessoResource.remove({id: processo.id},
+            function(data) {
+                toaster.pop('success', null, 'Processo excluído com sucesso');
+                $scope.consultar();
+            }
+        )      	
     }
 }

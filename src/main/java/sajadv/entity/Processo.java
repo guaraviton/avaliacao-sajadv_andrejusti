@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -109,9 +110,21 @@ public class Processo extends AutoIncrementIdEntity{
 		this.processoVinculado = processoVinculado;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="processo", orphanRemoval = true, cascade = {CascadeType.ALL})
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="processo", orphanRemoval = true, cascade = {CascadeType.ALL})
 	public List<ProcessoResponsavel> getResponsaveis() {
 		return responsaveis;
+	}
+	
+	@Transient
+	public String getResponsaveisStr() {
+		StringBuilder sb = new StringBuilder("");
+		for(ProcessoResponsavel processoResponsavel : responsaveis){
+			if(!"".equals(sb.toString())){
+				sb.append(" - ");
+			}
+			sb.append(processoResponsavel.getResponsavel().getNome());
+		}
+		return sb.toString();
 	}
 
 	public void setResponsaveis(List<ProcessoResponsavel> responsaveis) {

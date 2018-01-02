@@ -610,7 +610,7 @@ select[multiple], select[size] {
 	color: #929496;
 	padding: 0px 12px;
 	width: 100%;
-	height: 28px;
+	height: 27px;
 }
 
 .panel-heading {
@@ -662,6 +662,7 @@ fieldset.consulta {
 }
 
 fieldset.consulta > legend {
+	color: #6b6c70;
     font-size: 1.2em !important;
     font-weight: bold !important;
     text-align: left !important;

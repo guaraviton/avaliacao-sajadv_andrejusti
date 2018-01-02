@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
+import sajadv.common.util.StringUtils;
 import sajadv.dao.ProcessoDAO;
 import sajadv.entity.Processo;
 
@@ -15,7 +18,7 @@ import sajadv.entity.Processo;
 public class ProcessoDAOImpl extends CrudDAOImpl<Processo> implements ProcessoDAO{
 
 	@Override
-	public List<Processo> query(Integer idResponsavel) {
+	public List<Processo> query(String numeroProcessoUnificado, Integer idResponsavel) {
 		DetachedCriteria criteria= DetachedCriteria.forClass(Processo.class, "q1");
 		
 		if(idResponsavel != null){
@@ -24,8 +27,12 @@ public class ProcessoDAOImpl extends CrudDAOImpl<Processo> implements ProcessoDA
 			criteria.add(Restrictions.eq("responsavel.id", idResponsavel));
 		}
 		
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		if(StringUtils.isNotBlank(numeroProcessoUnificado)){
+			criteria.add(Restrictions.like("numeroProcessoUnificado", numeroProcessoUnificado, MatchMode.ANYWHERE));
+		}
 		
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.addOrder(Order.asc("numeroProcessoUnificado"));
         return (List<Processo>) template.findByCriteria(criteria);
 	}
 

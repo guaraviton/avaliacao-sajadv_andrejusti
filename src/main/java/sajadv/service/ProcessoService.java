@@ -6,6 +6,6 @@ import sajadv.entity.Processo;
 
 public interface ProcessoService extends CrudService<Processo>{
 
-	List<Processo> query(Integer idResponsavel);
+	List<Processo> query(String numeroProcessoUnificado, Integer idResponsavel);
 
 }

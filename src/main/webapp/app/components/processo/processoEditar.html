@@ -42,7 +42,7 @@
 	                		<label>&nbsp;</label>
 	                		<div class="checkbox" style="margin-top: 13px;">
 			               		<label>
-			                   		<input type="checkbox" ng-model="processoTratamentoPerda.somenteNaoExecutados" value="">Segredo de Justiça
+			                   		<input type="checkbox" ng-checked="processo.segredoJustica == 'S'" ng-model="processo.segredoJustica" ng-true-value="'S'" ng-false-value="'N'">Segredo de Justiça
 								</label>
 							</div>
 			           </div> 
@@ -51,7 +51,7 @@
 	             		<div class="form-group col-md-5">
 	                   		<label>Responsáveis</label>
 	                   		<div class="input-group select2-bootstrap-append">
-								<ui-select multiple required sortable="true" ng-model="processo.responsaveis" required>
+								<ui-select multiple required sortable="true" ng-model="processo.responsaveisArray">
 		                        	<ui-select-match placeholder="Informe Nome, E-mail ou CPF">{{$item.nome}}</ui-select-match>
 	                           		<ui-select-choices repeat="responsavel in responsaveis" refresh="buscarResponsaveis($select.search)" refresh-delay="10" minimum-input-length="4">
 	                              		<div ng-bind-html="responsavel.nome | highlight: $select.search"></div>
@@ -75,8 +75,21 @@
 	                <div class="row"> 
 	                	<div class="form-group col-md-12">
 	                   		<label>Processo vinculado</label>
-	                   		<textarea class="form-control" rows="4" ng-model="processo.processoVinculado">
-	                   		</textarea>
+                   			<div class="input-group select2-bootstrap-append">
+								<ui-select sortable="true" ng-model="processo.processoVinculado">
+		                        	<ui-select-match placeholder="Informe Número Processo Unificado">Número processo unificado: {{$select.selected.numeroProcessoUnificado}} - Data distribuição: {{$select.selected.dataDistribuicao | date:'dd/MM/yyyy'}} - Situação: {{$select.selected.situacao.nome}} {{$select.selected.segredoJustica == 'S' ? '(Segredo de Justiça)' : ''}}</ui-select-match>
+	                           		<ui-select-choices repeat="processo in processos" refresh="buscarProcessos($select.search)" refresh-delay="10" minimum-input-length="4">
+	                              		<div ng-bind-html="processo.numeroProcessoUnificado | highlight: $select.search"></div>
+	                              		<div ng-bind-html="processo.dataDistribuicao | date:'dd/MM/yyyy' | highlight: $select.search"></div>
+	                              		<div ng-bind-html="processo.situacao.nome | highlight: $select.search"></div>
+	                           		</ui-select-choices>
+		                        </ui-select>
+		                        <span class="input-group-btn">
+			                        <button type="button" ng-click="processo.processoVinculado = undefined" class="btn btn-default" title="Limpar Processo Vinculado">
+			                        	<i class="fa fa-trash-o"></i>
+			                        </button>
+		                        </span>
+	                     	</div>
 	                	</div>
 	                </div>
 	                <div class="row"> 
@@ -84,11 +97,20 @@
 	                   		<button id="buttonVoltar" class="btn btn-default btn-app" ng-click="voltar()">Voltar</button>
 	                	</div>
 	                 	<div class="form-group col-md-2">
-		                   	<button id="buttonCadastrar" ng-disabled="processoForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">Cadastrar</button>
+		                   	<button id="buttonCadastrar" ng-disabled="processoForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">{{processo.id ? 'Salvar' : 'Cadastrar'}}</button>
 		                </div>
 		             </div>   
 				</form>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<fieldset class="consulta">
+			<legend style="font-size: 13px !important;">Processos vinculados(filhos)</legend>
+			<label>Número processo unificado:  - Data distribuição:  - Situação: </label>
+		</fieldset>
 	</div>
 </div>
