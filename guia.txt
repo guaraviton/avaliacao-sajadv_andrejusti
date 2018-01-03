@@ -1,0 +1,33 @@
+# Guia para instalação
+
+# 1. - Java JRE
+# 1.1 - Download
+	Baixar a versão Version 8 Update 151 na url https://www.java.com/pt_BR/download/ e realizar a instaçação.	
+# 1.2 - Configuração	
+	Configurar a variável de ambiente JAVA_HOME cujo valor deve ser o diretório da instação do item 1 - Java JRE	
+	
+# 2. - Container Web Tomcat
+# 2.1 - Download
+	A versão 7.0.82 do container web deve ser baixada do fornecedor através da url http://mirror.nbtelecom.com.br/apache/tomcat/tomcat-7/v7.0.82/bin/apache-tomcat-7.0.82.zip
+# 2.2 - Configuração
+	Descompactar o conteúdo zip em alguma pasta de sua preferência.
+	Configurar a variável de ambiente JAVA_HOME cujo valor deve ser o diretório da instação do item 1 - Java JRE
+
+# 3. - Banco de Dados - Mysql
+# 3.1 - Download
+	Baixar a última versão MySQL Community Edition (GPL), MySQL Community Server 5.7.20 na url https://www.mysql.com/downloads/ e realizar a instalação	
+# 3.1 - Configuração
+	Logar como root através do console disponibilizado pela instalação, utilizando a senha fornecida no passo acima e executar:
+	* instruções para criação de todo o schema no banco de dados contidas no arquivo schema.sql
+	* instruções para criação do usário da aplicação contidas no arquivo config.sql	
+	* instruções para cargas das informações básicas no banco de dados contidas no arquivo carga.sql
+	
+# 4. - Aplicação
+# 4.1 - Configuração
+	Copiar o arquivo gestaodeprocessos.war para o diretório \webapps que se encontra dentro do diretório criado no passo 2.2 - Configuração
+	
+# 5. - Iniciar Container Web Tomcat
+	Executar o arquivo startup.bat presente no diretorio \bin que se encontra dentro do diretório criado no passo 2.2 - Configuração
+	
+# 6. - Código fonte
+	Pode ser feito um clone atraves da url https://github.com/guaraviton/avaliacao-sajadv_andrejusti

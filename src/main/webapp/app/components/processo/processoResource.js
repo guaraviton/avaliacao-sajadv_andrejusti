@@ -5,7 +5,8 @@ function ProcessoResource($resource) {
 	var rest = $resource(urlBase,{
 		'id': ''
 		}, {   
-			vinculados: {isArray: true, method: 'GET', url: urlBase + '/vinculados', params: {id: '@id'}}	      
+			vinculados: {isArray: true, method: 'GET', url: urlBase + '/vinculados', params: {id: '@id'}},
+			responsaveis: {isArray: true, method: 'GET', url: urlBase + '/responsaveis', params: {id: '@id'}}	
 		}
 	);
 	return rest;

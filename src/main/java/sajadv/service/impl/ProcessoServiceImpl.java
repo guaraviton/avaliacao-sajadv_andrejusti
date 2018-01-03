@@ -16,14 +16,19 @@ import sajadv.dao.CrudDAO;
 import sajadv.dao.ProcessoDAO;
 import sajadv.entity.Processo;
 import sajadv.entity.ProcessoResponsavel;
+import sajadv.entity.Responsavel;
 import sajadv.service.EmailService;
 import sajadv.service.ProcessoService;
+import sajadv.service.ResponsavelService;
 
 @Service
 public class ProcessoServiceImpl extends CrudServiceImpl<Processo> implements ProcessoService {
 	
 	@Autowired
 	EmailService emailService;
+	
+	@Autowired
+	ResponsavelService responsavelService;
 	
 	@Autowired
 	ProcessoDAO processoDAO;
@@ -46,7 +51,7 @@ public class ProcessoServiceImpl extends CrudServiceImpl<Processo> implements Pr
 			super.excluir(id);
 			enviarEmailsResponsaveisExclusao(processo);	
 		}catch(DataIntegrityViolationException e){
-			throw new RegistroReferenciadoException(MessageUtils.get("registro.referenciado.erro.exclusao"));
+			throw new RegistroReferenciadoException(MessageUtils.get("registro.processo.referenciado.erro.exclusao"));
 		}
 	}
 	
@@ -63,31 +68,34 @@ public class ProcessoServiceImpl extends CrudServiceImpl<Processo> implements Pr
 		validar(processo);
 		boolean isInclusao = processo.getId() == null;
 		tratarRelacionamentos(processo);
-		List<String> responsaveisEdicao = null;
-		if(!isInclusao){
-			responsaveisEdicao = getNovosResponsaveisEdicao(processo);
-		}
+		List<Responsavel> responsaveisAtual = responsavelService.query(null, null, null, null, processo.getId());
 		processo = super.salvar(processo);
 		if(isInclusao){
 			enviarEmailsResponsaveisCadastro(processo);	
-		}else if(!responsaveisEdicao.isEmpty()){
-			enviarEmailsResponsaveisEdicao(processo, responsaveisEdicao);
+		}else{
+			enviarEmailsResponsaveisEdicao(processo, responsaveisAtual);
 		}
 		return processo;
 	}
 	
-	private List<String> getNovosResponsaveisEdicao(Processo processo) {
-		List<String> responsaveis = new ArrayList<String>();
-		for(ProcessoResponsavel processoResponsavel : processo.getResponsaveis()){
-			if(processoResponsavel.getId() == null){
-				responsaveis.add(processoResponsavel.getResponsavel().getEmail());	
+	private void enviarEmailsResponsaveisEdicao(Processo processo, List<Responsavel> responsaveisAtual) {
+		List<String> destinatarios = new ArrayList<String>();
+		boolean existente;
+		for(ProcessoResponsavel processoResponsavelNovo : processo.getResponsaveis()){
+			existente = false;
+			for(Responsavel responsavelAtual : responsaveisAtual){
+				if(processoResponsavelNovo.getResponsavel().getCpf().equals(responsavelAtual.getCpf())){
+					existente  = true;
+					break;
+				}
+			}
+			if(!existente){
+				destinatarios.add(processoResponsavelNovo.getResponsavel().getEmail());
 			}
 		}
-		return responsaveis;
-	}
-
-	private void enviarEmailsResponsaveisEdicao(Processo processo, List<String> responsaveis) {
-		emailService.enviar(null, responsaveis.toArray(new String[0]), MessageUtils.get("titulo.email.processo"), MessageUtils.get("conteudo.email.edicao.processo", processo.getNumeroProcessoUnificado()));	
+		if(!destinatarios.isEmpty()){
+			emailService.enviar(null, destinatarios.toArray(new String[0]), MessageUtils.get("titulo.email.processo"), MessageUtils.get("conteudo.email.edicao.processo", processo.getNumeroProcessoUnificado()));	
+		}
 	}
 
 	private void enviarEmailsResponsaveisCadastro(Processo processo) {

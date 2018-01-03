@@ -3,7 +3,6 @@ package sajadv.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
@@ -48,7 +47,7 @@ public class Responsavel extends AutoIncrementIdEntity{
 	
 	private List<ProcessoResponsavel> processos = new ArrayList<ProcessoResponsavel>(0);
 	
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="responsavel")
 	@Fetch(value = FetchMode.SUBSELECT)
 	public List<ProcessoResponsavel> getProcessos() {
 		return processos;
@@ -94,5 +93,20 @@ public class Responsavel extends AutoIncrementIdEntity{
 
 	public void setFoto(byte[] foto) {
 		this.foto = foto;
+	}
+	
+	@Transient
+	public String getProcessosStr() {
+		try{
+			StringBuilder sb = new StringBuilder("");
+			for(ProcessoResponsavel processoResponsavel : processos){
+				if(!"".equals(sb.toString())){
+					sb.append(" - ");
+				}
+				sb.append(processoResponsavel.getProcesso().getNumeroProcessoUnificado());
+			}
+			return sb.toString();
+		}catch(Exception e){}
+		return "";
 	}
 }

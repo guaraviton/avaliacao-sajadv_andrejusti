@@ -47,7 +47,7 @@
 	                	</div>
 	                 	<div class="form-group col-md-2">
 		                   	<label>&nbsp;</label>
-		                   	<button id="buttonCadastrar" ng-disabled="responsavelForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">Cadastrar</button>
+		                   	<button id="buttonCadastrar" ng-disabled="responsavelForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">{{responsavel.id ? 'Salvar' : 'Cadastrar'}}</button>
 		                </div>
 					</div>
 				</form>
@@ -69,18 +69,16 @@
                      <th>Pasta física cliente</th>
                      <th>Descrição</th>
                      <th>Situação</th>
-                     <th>Responsáveis</th>
                   </tr>
                </thead>
                <tbody>
                   <tr ng-repeat="processo in processos" ng-click="editar(cliente)">
                      <td>{{processo.numeroProcessoUnificado}}</td>
                      <td>{{processo.dataDistribuicao | date:'dd/MM/yyyy' }}</td>                     
-                     <td>{{processo.segredoJustica}}</td>
+                     <td>{{processo.segredoJustica == 'S' ? 'Sim' : 'Não'}}</td>
                      <td>{{processo.pastaFisicaCliente}}</td>
                      <td>{{processo.descricao}}</td>                     
                      <td>{{processo.situacao.nome}}</td>
-                     <td>{{processo.descricao}}</td>
                   </tr>
                </tbody>
             </table>

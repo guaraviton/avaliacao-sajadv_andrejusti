@@ -11,5 +11,5 @@ public interface ProcessoDAO extends CrudDAO<Processo>{
 
 	List<Processo> query(String numeroProcessoUnificado, Date dataDistribuicaoInicio, Date dataDistribuicaoFim,
 			Integer idSituacao, String segredoJustica, String pastaFisicaCliente, Integer idResponsavel);
-	
+
 }

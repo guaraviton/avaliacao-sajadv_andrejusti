@@ -112,25 +112,28 @@ public class Processo extends AutoIncrementIdEntity{
 		this.processoVinculado = processoVinculado;
 	}
 
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="processo", orphanRemoval = true, cascade = {CascadeType.ALL})
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="processo", orphanRemoval = true, cascade = {CascadeType.ALL})
 	@Fetch(value = FetchMode.SUBSELECT)
 	public List<ProcessoResponsavel> getResponsaveis() {
 		return responsaveis;
 	}
 	
-	@Transient
-	public String getResponsaveisStr() {
-		StringBuilder sb = new StringBuilder("");
-		for(ProcessoResponsavel processoResponsavel : responsaveis){
-			if(!"".equals(sb.toString())){
-				sb.append(" - ");
-			}
-			sb.append(processoResponsavel.getResponsavel().getNome());
-		}
-		return sb.toString();
-	}
-
 	public void setResponsaveis(List<ProcessoResponsavel> responsaveis) {
 		this.responsaveis = responsaveis;
+	}
+	
+	@Transient
+	public String getResponsaveisStr() {
+		try{
+			StringBuilder sb = new StringBuilder("");
+			for(ProcessoResponsavel processoResponsavel : responsaveis){
+				if(!"".equals(sb.toString())){
+					sb.append(" - ");
+				}
+				sb.append(processoResponsavel.getResponsavel().getNome());
+			}
+			return sb.toString();
+		}catch(Exception e){}
+		return "";
 	}
 }

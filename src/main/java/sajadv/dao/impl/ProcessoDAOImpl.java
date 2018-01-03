@@ -60,9 +60,10 @@ public class ProcessoDAOImpl extends CrudDAOImpl<Processo> implements ProcessoDA
 			criteria.add(Restrictions.like("pastaFisicaCliente", pastaFisicaCliente, MatchMode.ANYWHERE));
 		}
 		
+		criteria.createAlias("responsaveis", "responsaveis", JoinType.LEFT_OUTER_JOIN);
+		criteria.createAlias("responsaveis.responsavel", "responsavel", JoinType.LEFT_OUTER_JOIN);
+		
 		if(idResponsavel != null){
-			criteria.createAlias("responsaveis", "responsaveis", JoinType.LEFT_OUTER_JOIN);
-			criteria.createAlias("responsaveis.responsavel", "responsavel", JoinType.LEFT_OUTER_JOIN);
 			criteria.add(Restrictions.eq("responsavel.id", idResponsavel));
 		}
 		
@@ -70,5 +71,4 @@ public class ProcessoDAOImpl extends CrudDAOImpl<Processo> implements ProcessoDA
 		criteria.addOrder(Order.asc("numeroProcessoUnificado"));
         return (List<Processo>) template.findByCriteria(criteria);
 	}
-
 }

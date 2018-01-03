@@ -47,12 +47,12 @@ public class EmailServiceImpl implements EmailService {
 	    	  if(response.getCode() == 407){
 	    		  throw new GlobalException("Access Denied");
 	    	  }
-	    	  throw new GlobalException("Erro ao enviar email");
+	    	  //throw new GlobalException("Erro ao enviar email");
 	      }
 	      LOGGER.info("Email enviado com sucesso" + (to == null ? "" : " para " + to) + (bcc == null ? "" : " para bcc " + ArrayUtils.toString(bcc)) + " com o titulo " + titulo + " e conteudo " + conteudo + ". Mensagem do servidor de email: " + response.getMessage());
 	    }catch (SendGridException e) {
 	    	LOGGER.error("Erro ao enviar email", e);
-	    	throw new GlobalException(e);
+	    	//throw new GlobalException(e);
 	    }
 	}
 

@@ -69,7 +69,9 @@ public class ResponsavelController{
 			responsavelEntity.setFoto(file.getBytes());	
 		}else{
 			if(responsavelEntity.getId() != null){
-				responsavelEntity.setFoto(responsavelService.get(responsavelEntity.getId()).getFoto());	
+				if(responsavelService.get(responsavelEntity.getId()) != null){
+					responsavelEntity.setFoto(responsavelService.get(responsavelEntity.getId()).getFoto());	
+				}
 			}
 		}
 		return responsavelService.salvar(responsavelEntity);
@@ -77,6 +79,6 @@ public class ResponsavelController{
 	
 	@RequestMapping(method = RequestMethod.GET)
     public List<Responsavel> query(@RequestParam(required=false) String nome, @RequestParam(required=false) String cpf, @RequestParam(required=false) String numeroProcessoUnificado, @RequestParam(required=false) String nomeEmailCpfLike) {
-        return responsavelService.query(nome, cpf, numeroProcessoUnificado, nomeEmailCpfLike != null ? StringUtils.decode(nomeEmailCpfLike) : nomeEmailCpfLike);
+        return responsavelService.query(nome, cpf, numeroProcessoUnificado, nomeEmailCpfLike != null ? StringUtils.decode(nomeEmailCpfLike) : nomeEmailCpfLike, null);
     }
 }

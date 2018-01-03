@@ -6,6 +6,6 @@ import sajadv.entity.Responsavel;
 
 public interface ResponsavelService extends CrudService<Responsavel>{
 
-	List<Responsavel> query(String nome, String cpf, String numeroProcessoUnificado, String nomeEmailCpfLike);
+	List<Responsavel> query(String nome, String cpf, String nomeEmailCpfLike, String numeroProcessoUnificado, Integer idProcesso);
 
 }

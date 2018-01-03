@@ -49,6 +49,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 	    	}],
 	    	processosVinculados: function() {	 	    		
        			return null;
+    		},
+	    	responsaveis: function() {	 	    		
+       			return null;
     		}
 		}
 	})	
@@ -70,6 +73,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     				return;
     			}		    
        			return ProcessoResource.vinculados({id: $route.current.params.id}).$promise;
+    		}],
+    		responsaveis: ['ProcessoResource', '$route', function(ProcessoResource, $route) {	 
+	    		if($route.current.params.id == 0){
+    				return;
+    			}		    
+       			return ProcessoResource.responsaveis({id: $route.current.params.id}).$promise;
     		}],
 		}
 	})

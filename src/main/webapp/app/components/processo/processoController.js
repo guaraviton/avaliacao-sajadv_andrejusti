@@ -1,6 +1,6 @@
-appController.controller('ProcessoController', ['$scope', '$upload', '$location', 'toaster', 'ProcessoResource', 'ResponsavelResource', 'processo', 'situacoes', 'processosVinculados', ProcessoController]);
+appController.controller('ProcessoController', ['$scope', '$upload', '$location', 'toaster', 'ProcessoResource', 'ResponsavelResource', 'processo', 'situacoes', 'processosVinculados', 'responsaveis', ProcessoController]);
 
-function ProcessoController($scope, $upload, $location, toaster, ProcessoResource, ResponsavelResource, processo, situacoes, processosVinculados) {
+function ProcessoController($scope, $upload, $location, toaster, ProcessoResource, ResponsavelResource, processo, situacoes, processosVinculados, responsaveis) {
     
 	$scope.situacoes = situacoes;
 	
@@ -8,14 +8,17 @@ function ProcessoController($scope, $upload, $location, toaster, ProcessoResourc
         $scope.processo = processo;
         $scope.isSomenteLeitura = $scope.processo.situacao.nome == 'Finalizado';
         $scope.processosVinculados = processosVinculados;
-        $scope.processo.responsaveisArray = [];
-        angular.forEach($scope.processo.responsaveis, function(processoResponsavel, index) {
+        $scope.processo.responsaveisArray = responsaveis;
+        /*angular.forEach($scope.processo.responsaveis, function(processoResponsavel, index) {
         	processoResponsavel.responsavel.idAssociacao = processoResponsavel.id;
         	$scope.processo.responsaveisArray.push(processoResponsavel.responsavel);               
-        });
+        });*/
         if($scope.processo.dataDistribuicao){
         	$scope.processo.dataDistribuicao = new Date($scope.processo.dataDistribuicao);                    
         }
+    }else{
+    	$scope.processo = {};
+    	$scope.processo.responsaveisArray = [];
     }
 	
     $scope.buscarProcessos = function(numeroProcessoUnificado){

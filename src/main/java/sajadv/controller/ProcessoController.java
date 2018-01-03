@@ -1,6 +1,5 @@
 package sajadv.controller;
 
-import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import sajadv.entity.Processo;
+import sajadv.entity.Responsavel;
 import sajadv.service.CrudService;
 import sajadv.service.ProcessoService;
+import sajadv.service.ResponsavelService;
 
 @RestController
 @RequestMapping("/processo")
@@ -24,6 +25,9 @@ public class ProcessoController extends CrudController<Processo>{
 
 	@Autowired
 	ProcessoService processoService;
+	
+	@Autowired
+	ResponsavelService responsavelService;
 	
 	@Override
 	public CrudService<Processo> getService() {
@@ -46,7 +50,13 @@ public class ProcessoController extends CrudController<Processo>{
 	
 	@RequestMapping(value="/{id}/vinculados", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-    public List<Processo> getVinculados(@PathVariable Integer id, OutputStream os) {
+    public List<Processo> getVinculados(@PathVariable Integer id) {
 		return processoService.getVinculados(id);
+    }
+	
+	@RequestMapping(value="/{id}/responsaveis", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+    public List<Responsavel> getResponsaveis(@PathVariable Integer id) {
+		return responsavelService.query(null, null, null, null, id);
     }
 }
