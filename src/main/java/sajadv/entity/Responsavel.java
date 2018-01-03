@@ -1,10 +1,18 @@
 package sajadv.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -37,6 +45,18 @@ public class Responsavel extends AutoIncrementIdEntity{
 	@Lob
 	@JsonIgnore
 	private byte[] foto;
+	
+	private List<ProcessoResponsavel> processos = new ArrayList<ProcessoResponsavel>(0);
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public List<ProcessoResponsavel> getProcessos() {
+		return processos;
+	}
+
+	public void setProcessos(List<ProcessoResponsavel> processos) {
+		this.processos = processos;
+	}
 
 	public String getNome() {
 		return nome;

@@ -6,7 +6,7 @@ function ProcessoController($scope, $upload, $location, toaster, ProcessoResourc
 	
 	if(processo){
         $scope.processo = processo;
-        $scope.isSomenteLeitura = ($scope.processo.situacao.nome = 'Finalizado');
+        $scope.isSomenteLeitura = $scope.processo.situacao.nome == 'Finalizado';
         $scope.processosVinculados = processosVinculados;
         $scope.processo.responsaveisArray = [];
         angular.forEach($scope.processo.responsaveis, function(processoResponsavel, index) {
@@ -25,7 +25,15 @@ function ProcessoController($scope, $upload, $location, toaster, ProcessoResourc
 	};
 	
     $scope.consultar = function(){
-    	ProcessoResource.query({numeroProcessoUnificado: $scope.processo.numeroProcessoUnificado}, function(result) {
+    	ProcessoResource.query({
+	    			numeroProcessoUnificado: $scope.processo.numeroProcessoUnificado,
+	    			dataDistribuicaoInicio: $scope.processo.dataDistribuicaoInicio,
+	    			dataDistribuicaoFim: $scope.processo.dataDistribuicaoFim,
+	    			idSituacao: $scope.processo.situacao ? $scope.processo.situacao.id : null,
+	    			segredoJustica: $scope.processo.segredoJustica,
+	    			pastaFisicaCliente: $scope.processo.pastaFisicaCliente,
+	    			idResponsavel: $scope.processo.responsavel ? $scope.processo.responsavel.id : null
+	    		}, function(result) {
 			$scope.processos = result;
 	    })
 	};
@@ -75,6 +83,12 @@ function ProcessoController($scope, $upload, $location, toaster, ProcessoResourc
             function(data) {
                 toaster.pop('success', null, 'Processo salvo com sucesso');
                 $scope.processo.id = data.id;
+                responsaveisTmp = [];
+                angular.forEach(data.responsaveis, function(processoResponsavel, index) {
+                	processoResponsavel.responsavel.idAssociacao = processoResponsavel.id;
+                	responsaveisTmp.push(processoResponsavel.responsavel);               
+                });
+                $scope.processo.responsaveisArray = responsaveisTmp;
             }
         ) 
     }

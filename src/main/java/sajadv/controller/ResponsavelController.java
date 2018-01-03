@@ -56,7 +56,7 @@ public class ResponsavelController{
 	@RequestMapping(value="/{id}/processos", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
     public List<Processo> query(@PathVariable Integer id) {
-		return processoService.query(null, id);
+		return processoService.query(null, null, null, null, null, null, id);
     }
 	
 	@RequestMapping(method = RequestMethod.POST)

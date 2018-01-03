@@ -49,7 +49,7 @@
 	                		<label>&nbsp;</label>
 	                		<div class="checkbox" style="margin-top: 13px;">
 			               		<label>
-			                   		<input type="checkbox" ng-model="processoTratamentoPerda.somenteNaoExecutados" value="">Segredo de Justiça
+			                   		<input type="checkbox" ng-model="processo.segredoJustica" ng-true-value="'S'" ng-false-value="'N'">Segredo de Justiça
 								</label>
 							</div>
 			           </div> 
@@ -61,7 +61,21 @@
 	                	</div>
 	                	<div class="form-group col-md-4">
 	                   		<label>Responsável</label>
-	                   		<input class="form-control" ng-model="processo.responsavel" ng-init="processo.responsavel=''">
+	                   		<div class="input-group select2-bootstrap-append">
+		                   		<ui-select sortable="true" ng-model="processo.responsavel">
+		                        	<ui-select-match placeholder="Informe Nome, E-mail ou CPF">{{$select.selected.nome}}</ui-select-match>
+	                           		<ui-select-choices repeat="responsavel in responsaveis" refresh="buscarResponsaveis($select.search)" refresh-delay="10" minimum-input-length="4">
+	                              		<div ng-bind-html="responsavel.nome | highlight: $select.search"></div>
+	                              		<div ng-bind-html="responsavel.email | highlight: $select.search"></div>
+	                              		<div ng-bind-html="responsavel.cpf | highlight: $select.search"></div>
+	                           		</ui-select-choices>
+		                        </ui-select>
+		                        <span ng-if="!isSomenteLeitura" class="input-group-btn">
+			                        <button type="button" ng-click="processo.responsavel = undefined" class="btn btn-default" title="Limpar Responsável">
+			                        	<i class="fa fa-trash-o"></i>
+			                        </button>
+		                        </span>
+							</div>
 	                	</div>
 	                	<div class="form-group col-md-2">
 	                   		<label>&nbsp;</label>
@@ -106,7 +120,7 @@
                      <td>{{processo.responsaveisStr}}</td>
                      <td class="acoes">
                      	<i class="fa fa-pencil" title="Alterar" ng-click="editar(processo)"></i>
-                     	<i class="fa fa-times" title="Excluir" ng-click="excluir(processo)"></i>
+                     	<i ng-if="processo.situacao.nome != 'Finalizado'" class="fa fa-times" title="Excluir" ng-click="excluir(processo)"></i>
                      </td>
                   </tr>
                </tbody>

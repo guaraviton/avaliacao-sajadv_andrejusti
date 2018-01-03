@@ -15,13 +15,13 @@
 					<div class="row"> 
 	             		<div class="form-group col-md-3">
 	                   		<label>Número Processo Unificado</label>
-	                   		<input class="form-control" mask="0000000-00.0000.0.00.0000" required ng-model="processo.numeroProcessoUnificado">
+	                   		<input ng-ng-disabled="isSomenteLeitura" class="form-control" mask="0000000-00.0000.0.00.0000" required ng-model="processo.numeroProcessoUnificado">
 	                	</div>
 		                <div class="form-group col-md-2">
 	                   		<label>Data Distribuição</label>  
 							<div class="input-group">
-								<input class="form-control" title="Por favor, preencha este campo no formato: DD/MM/YYYY" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="optionsDataDistribuicao" ng-model="processo.dataDistribuicao" is-open="dataDistribuicaoOpened" mask="99/99/9999"/>
-								<span class="input-group-btn">
+								<input ng-disabled="isSomenteLeitura" class="form-control" title="Por favor, preencha este campo no formato: DD/MM/YYYY" uib-datepicker-popup="dd/MM/yyyy" datepicker-options="optionsDataDistribuicao" ng-model="processo.dataDistribuicao" is-open="dataDistribuicaoOpened" mask="99/99/9999"/>
+								<span class="input-group-btn" ng-if="!isSomenteLeitura">
 									<button type="button" class="btn btn-default" ng-click="openDataDistribuicao()">
 										<i class="fa fa-calendar"></i>
 									</button>                                
@@ -30,19 +30,19 @@
 	                	</div>
 	                	<div class="form-group col-md-2">
                         	<label>Situação</label>
-                        	<select class="form-control" required ng-model="processo.situacao" ng-options="situacao.nome for situacao in situacoes track by situacao.id" >
+                        	<select ng-disabled="isSomenteLeitura" class="form-control" required ng-model="processo.situacao" ng-options="situacao.nome for situacao in situacoes track by situacao.id" >
                           		<option value="">Todos</option>                          
                         	</select>                        
                      	</div>
                      	<div class="form-group col-md-3">
 	                   		<label>Pasta física cliente</label>  
-	                   		<input class="form-control" maxlength="50" ng-model="processo.pastaFisicaCliente">
+	                   		<input ng-disabled="isSomenteLeitura" class="form-control" maxlength="50" ng-model="processo.pastaFisicaCliente">
 	                	</div>
 	                	<div class="form-group col-md-2">
 	                		<label>&nbsp;</label>
 	                		<div class="checkbox" style="margin-top: 13px;">
 			               		<label>
-			                   		<input type="checkbox" ng-checked="processo.segredoJustica == 'S'" ng-model="processo.segredoJustica" ng-true-value="'S'" ng-false-value="'N'">Segredo de Justiça
+			                   		<input ng-disabled="isSomenteLeitura" type="checkbox" ng-checked="processo.segredoJustica == 'S'" ng-model="processo.segredoJustica" ng-true-value="'S'" ng-false-value="'N'">Segredo de Justiça
 								</label>
 							</div>
 			           </div> 
@@ -51,7 +51,7 @@
 	             		<div class="form-group col-md-5">
 	                   		<label>Responsáveis</label>
 	                   		<div class="input-group select2-bootstrap-append">
-								<ui-select multiple limit="3" required sortable="true" ng-model="processo.responsaveisArray">
+								<ui-select ng-disabled="isSomenteLeitura" multiple limit="3" required sortable="true" ng-model="processo.responsaveisArray">
 		                        	<ui-select-match placeholder="Informe Nome, E-mail ou CPF">{{$item.nome}}</ui-select-match>
 	                           		<ui-select-choices repeat="responsavel in responsaveis" refresh="buscarResponsaveis($select.search)" refresh-delay="10" minimum-input-length="4">
 	                              		<div ng-bind-html="responsavel.nome | highlight: $select.search"></div>
@@ -59,7 +59,7 @@
 	                              		<div ng-bind-html="responsavel.cpf | highlight: $select.search"></div>
 	                           		</ui-select-choices>
 		                        </ui-select>
-		                        <span class="input-group-btn">
+		                        <span ng-if="!isSomenteLeitura" class="input-group-btn">
 			                        <button type="button" ng-click="processo.responsaveis = undefined" class="btn btn-default" title="Limpar Responsável">
 			                        	<i class="fa fa-trash-o"></i>
 			                        </button>
@@ -68,7 +68,7 @@
 	                	</div>
 	                	<div class="form-group col-md-7">
 	                   		<label>Descrição</label>
-	                   		<textarea class="form-control" rows="4" maxlength="1000" ng-model="processo.descricao">
+	                   		<textarea ng-disabled="isSomenteLeitura" class="form-control" rows="4" maxlength="1000" ng-model="processo.descricao">
 	                   		</textarea>
 	                	</div>
 	                </div>
@@ -76,7 +76,7 @@
 	                	<div class="form-group col-md-12">
 	                   		<label>Processo vinculado</label>
                    			<div class="input-group select2-bootstrap-append">
-								<ui-select sortable="true" ng-model="processo.processoVinculado">
+								<ui-select ng-disabled="isSomenteLeitura" sortable="true" ng-model="processo.processoVinculado">
 		                        	<ui-select-match placeholder="Informe Número Processo Unificado">Número processo unificado: {{$select.selected.numeroProcessoUnificado}} - Data distribuição: {{$select.selected.dataDistribuicao | date:'dd/MM/yyyy'}} - Situação: {{$select.selected.situacao.nome}} {{$select.selected.segredoJustica == 'S' ? '(Segredo de Justiça)' : ''}}</ui-select-match>
 	                           		<ui-select-choices repeat="processo in processos" refresh="buscarProcessos($select.search)" refresh-delay="10" minimum-input-length="4">
 	                              		<div ng-bind-html="processo.numeroProcessoUnificado | highlight: $select.search"></div>
@@ -84,7 +84,7 @@
 	                              		<div ng-bind-html="processo.situacao.nome | highlight: $select.search"></div>
 	                           		</ui-select-choices>
 		                        </ui-select>
-		                        <span class="input-group-btn">
+		                        <span ng-if="!isSomenteLeitura" class="input-group-btn">
 			                        <button type="button" ng-click="processo.processoVinculado = undefined" class="btn btn-default" title="Limpar Processo Vinculado">
 			                        	<i class="fa fa-trash-o"></i>
 			                        </button>
@@ -97,7 +97,7 @@
 	                   		<button id="buttonVoltar" class="btn btn-default btn-app" ng-click="voltar()">Voltar</button>
 	                	</div>
 	                 	<div class="form-group col-md-2">
-		                   	<button id="buttonCadastrar" ng-disabled="processoForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">{{processo.id ? 'Salvar' : 'Cadastrar'}}</button>
+		                   	<button id="buttonCadastrar" ng-if="!isSomenteLeitura" ng-ng-disabled="processoForm.$invalid" class="btn btn-default btn-app" ng-click="salvar()">{{processo.id ? 'Salvar' : 'Cadastrar'}}</button>
 		                </div>
 		             </div>   
 				</form>

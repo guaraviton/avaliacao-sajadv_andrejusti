@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import sajadv.common.exception.BundleException;
 import sajadv.common.exception.DAOException;
 import sajadv.common.exception.GlobalException;
+import sajadv.common.exception.RegistroReferenciadoException;
 import sajadv.common.exception.ValidacaoException;
 import sajadv.common.util.MessageUtils;
 import sajadv.spring.handler.exception.dto.ValidationErrorDTO;
@@ -37,6 +38,16 @@ public class SpringExceptionHandler {
 		ValidationErrorDTO dto = new ValidationErrorDTO();
 		dto.addError(MessageUtils.get("erro.registro.desatualizado"));
 		LOGGER.error("Erro HibernateOptimisticLockingFailureException capturado", exception);
+		return dto;
+	}
+	
+	@ExceptionHandler({RegistroReferenciadoException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ValidationErrorDTO handleRegistroReferenciadoException(RegistroReferenciadoException exception) {
+		ValidationErrorDTO dto = new ValidationErrorDTO();
+		dto.addError(exception.getMensagem());
+		LOGGER.error("Erro RegistroReferenciadoException capturado", exception);
 		return dto;
 	}
 	

@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import sajadv.common.exception.RegistroReferenciadoException;
 import sajadv.common.exception.ValidacaoException;
 import sajadv.common.util.DateUtils;
 import sajadv.common.util.MessageUtils;
@@ -14,10 +16,14 @@ import sajadv.dao.CrudDAO;
 import sajadv.dao.ProcessoDAO;
 import sajadv.entity.Processo;
 import sajadv.entity.ProcessoResponsavel;
+import sajadv.service.EmailService;
 import sajadv.service.ProcessoService;
 
 @Service
 public class ProcessoServiceImpl extends CrudServiceImpl<Processo> implements ProcessoService {
+	
+	@Autowired
+	EmailService emailService;
 	
 	@Autowired
 	ProcessoDAO processoDAO;
@@ -28,15 +34,68 @@ public class ProcessoServiceImpl extends CrudServiceImpl<Processo> implements Pr
 	}
 
 	@Override
-	public List<Processo> query(String numeroProcessoUnificado, Integer idResponsavel) {
-		return processoDAO.query(numeroProcessoUnificado, idResponsavel);
+	public List<Processo> query(String numeroProcessoUnificado, Date dataDistribuicaoInicio, Date dataDistribuicaoFim,
+			Integer idSituacao, String segredoJustica, String pastaFisicaCliente, Integer idResponsavel) {
+		return processoDAO.query(numeroProcessoUnificado, dataDistribuicaoInicio, dataDistribuicaoFim, idSituacao, segredoJustica, pastaFisicaCliente, idResponsavel);
 	}
 	
 	@Override
+	public void excluir(Integer id) {
+		try{
+			Processo processo = get(id);
+			super.excluir(id);
+			enviarEmailsResponsaveisExclusao(processo);	
+		}catch(DataIntegrityViolationException e){
+			throw new RegistroReferenciadoException(MessageUtils.get("registro.referenciado.erro.exclusao"));
+		}
+	}
+	
+	private void enviarEmailsResponsaveisExclusao(Processo processo) {
+		List<String> responsaveis = new ArrayList<String>();
+		for(ProcessoResponsavel processoResponsavel : processo.getResponsaveis()){
+			responsaveis.add(processoResponsavel.getResponsavel().getEmail());
+		}
+		emailService.enviar(null, responsaveis.toArray(new String[0]), MessageUtils.get("titulo.email.processo"), MessageUtils.get("conteudo.email.exclusao.processo", processo.getNumeroProcessoUnificado()));
+	}
+
+	@Override
 	public Processo salvar(Processo processo) {
 		validar(processo);
+		boolean isInclusao = processo.getId() == null;
 		tratarRelacionamentos(processo);
-		return super.salvar(processo);
+		List<String> responsaveisEdicao = null;
+		if(!isInclusao){
+			responsaveisEdicao = getNovosResponsaveisEdicao(processo);
+		}
+		processo = super.salvar(processo);
+		if(isInclusao){
+			enviarEmailsResponsaveisCadastro(processo);	
+		}else if(!responsaveisEdicao.isEmpty()){
+			enviarEmailsResponsaveisEdicao(processo, responsaveisEdicao);
+		}
+		return processo;
+	}
+	
+	private List<String> getNovosResponsaveisEdicao(Processo processo) {
+		List<String> responsaveis = new ArrayList<String>();
+		for(ProcessoResponsavel processoResponsavel : processo.getResponsaveis()){
+			if(processoResponsavel.getId() == null){
+				responsaveis.add(processoResponsavel.getResponsavel().getEmail());	
+			}
+		}
+		return responsaveis;
+	}
+
+	private void enviarEmailsResponsaveisEdicao(Processo processo, List<String> responsaveis) {
+		emailService.enviar(null, responsaveis.toArray(new String[0]), MessageUtils.get("titulo.email.processo"), MessageUtils.get("conteudo.email.edicao.processo", processo.getNumeroProcessoUnificado()));	
+	}
+
+	private void enviarEmailsResponsaveisCadastro(Processo processo) {
+		List<String> responsaveis = new ArrayList<String>();
+		for(ProcessoResponsavel processoResponsavel : processo.getResponsaveis()){
+			responsaveis.add(processoResponsavel.getResponsavel().getEmail());
+		}
+		emailService.enviar(null, responsaveis.toArray(new String[0]), MessageUtils.get("titulo.email.processo"), MessageUtils.get("conteudo.email.cadastro.processo", processo.getNumeroProcessoUnificado()));
 	}
 
 	private void validar(Processo processo) {

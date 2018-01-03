@@ -26,6 +26,7 @@ public abstract class CrudDAOImpl<T extends IdEntity> extends DAO implements Cru
 
 	public void excluir(T entidade){
 		template.delete(entidade);
+		template.flush();
 	}
 	
 	@SuppressWarnings("unchecked") 

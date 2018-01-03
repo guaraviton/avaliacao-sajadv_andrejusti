@@ -1,9 +1,11 @@
 package sajadv.controller;
 
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +32,16 @@ public class ProcessoController extends CrudController<Processo>{
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-    public List<Processo> query(@RequestParam(required=false) String numeroProcessoUnificado) {
-		return processoService.query(numeroProcessoUnificado, null);
+    public List<Processo> query(
+    		@RequestParam(required=false) String numeroProcessoUnificado,
+    		@RequestParam(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataDistribuicaoInicio,
+    		@RequestParam(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataDistribuicaoFim,
+    		@RequestParam(required=false) Integer idSituacao,
+    		@RequestParam(required=false) String segredoJustica,
+    		@RequestParam(required=false) String pastaFisicaCliente,
+    		@RequestParam(required=false) Integer idResponsavel
+    	) {
+		return processoService.query(numeroProcessoUnificado, dataDistribuicaoInicio, dataDistribuicaoFim, idSituacao, segredoJustica, pastaFisicaCliente, idResponsavel);
     }
 	
 	@RequestMapping(value="/{id}/vinculados", method = RequestMethod.GET)
